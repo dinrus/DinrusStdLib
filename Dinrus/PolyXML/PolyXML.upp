@@ -1,0 +1,12 @@
+description "\377128,0,255";
+
+uses
+	Dinrus/Core,
+	Dinrus/ClassFactory;
+
+file
+	PolyXML.cpp,
+	PolyXML.h,
+	src.tpp,
+	srcdoc.tpp;
+

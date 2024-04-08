@@ -1,0 +1,43 @@
+description "Пакет служит для сбора исходников при языковой локализации\377";
+
+uses
+	Dinrus/CtrlLib,
+	PostgreSQL,
+	Dinrus/RichEdit,
+	Dinrus/MySql,
+	Dinrus/GridCtrl,
+	Oracle,
+	Dinrus/Dinrus/SqlCtrl,
+	Dinrus/plugin/astyle,
+	Dinrus/plugin/bmp,
+	Dinrus/plugin/box2d,
+	Dinrus/plugin/bz2,
+	Dinrus/plugin/dbf,
+	Dinrus/plugin/DroidFonts,
+	Dinrus/plugin/ftp,
+	Dinrus/plugin/FT_fontsys,
+	Dinrus/plugin/gif,
+	Dinrus/plugin/glew,
+	Dinrus/plugin/jpg,
+	Dinrus/plugin/lz4,
+	Dinrus/plugin/lzma,
+	Dinrus/plugin/ndisasm,
+	Dinrus/plugin/pcre,
+	Dinrus/plugin/pcx,
+	Dinrus/plugin/png,
+	Dinrus/plugin/ppm,
+	Dinrus/plugin/sqlite3,
+	Dinrus/plugin/tif,
+	Dinrus/plugin/z,
+	Dinrus/plugin/zip,
+	Dinrus/Core/POP3,
+	Dinrus/Core/Rpc,
+	Dinrus/Core/SMTP,
+	Dinrus/Core/SSL;
+
+file
+	main.cpp;
+
+mainconfig
+	"" = "GUI";
+

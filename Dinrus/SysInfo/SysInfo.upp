@@ -1,0 +1,35 @@
+description "Функции для работы с ОС, железом и Рабочим Столом\377B44,169,203";
+
+uses
+	Dinrus/Core,
+	Dinrus/Functions4U;
+
+library(WIN32) "ws2_32 psapi gdi32 vfw32 oleaut32 iphlpapi powrprof netapi32 wbemuuid";
+
+options(MSC) "/D PSAPI_VERSION=1";
+
+link(POSIX | LINUX | FREEBSD) -lX11;
+
+link(POSIX & !NO_XTEST) -lXtst;
+
+file
+	SysInfo.cpp,
+	SysInfo.h,
+	SysInfo_in.h,
+	OS.cpp,
+	OSwin.c,
+	OSwin.h,
+	srcdoc.tpp,
+	ScreenGrab.cpp,
+	MouseKey.cpp,
+	CPUSpeed.cpp,
+	Battery.cpp,
+	srcdoc.tpp,
+	src.tpp,
+	srcimp.tpp,
+	Dinrus/SysInfo.t,
+	Copying,
+	Crash.cpp,
+	Crash.h;
+
+ spellcheck_comments "RU-RU"

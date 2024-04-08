@@ -1,0 +1,43 @@
+description "Структуры данных Rich-текста и рисования, RTF и HTML экспорт/импорт\377128,0,255";
+
+uses
+	Dinrus/plugin/png,
+	Dinrus/Draw,
+	Dinrus/Painter;
+
+file
+	RichText.h options(BUILDER_OPTION) PCH,
+	Object.cpp,
+	RichImage.cpp,
+	Para.h,
+	ParaData.cpp,
+	ParaType.cpp,
+	ParaPaint.cpp,
+	Txt.h,
+	HeaderFooter.cpp,
+	TxtData.cpp,
+	TxtPaint.cpp,
+	TxtOp.cpp,
+	Format.cpp,
+	Table.h,
+	TableCell.cpp,
+	TableLayout.cpp,
+	TablePaint.cpp,
+	TableData.cpp,
+	Text.h,
+	TextPaint.cpp,
+	TextStyle.cpp,
+	TextData.cpp,
+	TextTable.cpp,
+	EncodeQtf.cpp,
+	ParseQtf.cpp,
+	EncodeHTML.cpp,
+	ParseHTML.cpp,
+	Util.cpp,
+	RichText.iml,
+	Info readonly separator,
+	srcdoc.tpp,
+	src.tpp,
+	Copying,
+	srcimp.tpp;
+

@@ -1,0 +1,12 @@
+description "Формат файла рисунка GIF\3770,128,128";
+
+uses
+	Dinrus/Draw;
+
+file
+	gif.h,
+	gifupp.cpp,
+	gif.icpp,
+	Info readonly separator,
+	Copying;
+

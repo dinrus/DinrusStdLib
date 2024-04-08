@@ -1,0 +1,16 @@
+ctrl SqlArray {
+	group "Комплекс";
+	>ArrayCtrl;
+}
+
+ctrl SqlOption {
+	group "Нажимные";
+	>Option;
+	GetStdSize() { sz = GetMinSize(); sz.cx *= 8; sz.cy = max(16, sz.cy); return sz; }
+}
+
+ctrl SqlNOption {
+	group "Нажимные";
+	>Option;
+	GetStdSize() { sz = GetMinSize(); sz.cx *= 8; sz.cy = max(16, sz.cy); return sz; }
+}

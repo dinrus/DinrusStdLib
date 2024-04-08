@@ -1,0 +1,13 @@
+library(WIN32) "SDL2 SDL2main SetupApi Version";
+
+library(CLANG POSIX) "SDL2 SDL2main";
+
+file
+	Synth.h,
+	Core.cpp,
+	sample.i,
+	Gen.cpp,
+	Operator.cpp,
+	Sequencer.cpp,
+	QSF.cpp;
+

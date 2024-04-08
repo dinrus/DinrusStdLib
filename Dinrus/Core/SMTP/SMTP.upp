@@ -1,0 +1,11 @@
+description "Простой протокол отправки почты (SMTP)\3770,128,128";
+
+uses
+	Dinrus/Core,
+	Dinrus/Core/SSL;
+
+file
+	SMTP.h,
+	Smtp.cpp,
+	src.tpp;
+

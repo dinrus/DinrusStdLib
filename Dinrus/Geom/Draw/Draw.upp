@@ -1,0 +1,28 @@
+description "Код ГИП, относящийся  к геометрии. Не использовать в новом коде.\377";
+
+acceptflags
+	NOHRRPNG;
+
+uses
+	Dinrus/Draw,
+	Dinrus/plugin/png,
+	Dinrus/plugin/gif,
+	Dinrus/plugin/jpg,
+	Dinrus/Geom/Coords;
+
+file
+	GeomDraw.h,
+	imgtran.h,
+	imgtran.cpp,
+	plotter.h,
+	plotter.cpp,
+	pathDraw.h,
+	pathDraw.cpp,
+	path_aux.cpp,
+	coordutil.h,
+	coordutil.cpp,
+	hrr.h,
+	hrr.cpp,
+	Info readonly separator,
+	Copying;
+

@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "гнёзда": {
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "properties": {
+              "имя": {
+                "type": "string"
+              },
+              "пакеты": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "описание": {
+                "type": "string"
+              },
+              "репозиторий": {
+                "type": "string"
+              },
+              "статус": {
+                "type": "string"
+              },
+              "категория": {
+                "type": "string"
+              },
+              "readme": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "имя",
+              "пакеты",
+              "описание",
+              "репозиторий",
+              "статус",
+              "категория"
+            ]
+          }
+        ]
+      }
+    },
+    "required": [
+      "гнёзда"
+    ]
+  }
+  

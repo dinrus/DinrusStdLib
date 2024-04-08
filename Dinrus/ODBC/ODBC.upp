@@ -1,0 +1,13 @@
+description "Генерный интерфейс ODBC\377";
+
+uses
+	Dinrus/Sql;
+
+library(WIN32) odbc32;
+
+library(!WIN32) odbc;
+
+file
+	ODBC.h,
+	ODBC.cpp;
+

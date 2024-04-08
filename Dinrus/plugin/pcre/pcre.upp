@@ -1,0 +1,12 @@
+description "Библиотека регулярных выражений PCRE\3770,128,128";
+
+options(BUILDER_OPTION) NOWARNINGS;
+
+file
+	Pcre.h,
+	RegExp.h,
+	RegExp.cpp,
+	lib/config.h,
+	lib.c,
+	Copying;
+

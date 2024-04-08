@@ -1,0 +1,14 @@
+description "Контрол для показа анимированного GIF и многостраничных файлов TIFF\377";
+
+uses
+	Dinrus/plugin/gif,
+	Dinrus/plugin/tif;
+
+file
+	Dinrus/RasterPlayer.cpp,
+	Dinrus/RasterPlayer.h,
+	Dinrus/RasterPlayer.iml,
+	Dinrus/RasterPlayer.usc,
+	Credits.txt,
+	src.tpp;
+

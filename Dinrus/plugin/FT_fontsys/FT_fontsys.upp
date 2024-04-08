@@ -1,0 +1,12 @@
+description "Замена Draw FONTSYS на основе FreeType\3770,128,0";
+
+options(BUILDER_OPTION) NOWARNINGS;
+
+uses
+	Dinrus/Draw,
+	Dinrus/plugin/freetype;
+
+file
+	FT_fontsys.cpp,
+	FT_fontsys.h;
+

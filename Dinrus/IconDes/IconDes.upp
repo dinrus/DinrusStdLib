@@ -1,0 +1,32 @@
+description "Дизайнер картинок\3770,128,128";
+
+uses
+	Dinrus/CtrlLib,
+	Dinrus/plugin/gif,
+	Dinrus/plugin/jpg,
+	Dinrus/Painter,
+	Dinrus/RichEdit;
+
+file
+	IconDes.h options(BUILDER_OPTION) PCH,
+	IconDes.key,
+	IconDraw.cpp,
+	AlphaCtrl.cpp,
+	RGBACtrl.cpp,
+	ImageOp.cpp,
+	Paint.cpp,
+	Event.cpp,
+	Fast.cpp,
+	IconDes.cpp,
+	List.cpp,
+	Image.cpp,
+	Smoothen.cpp,
+	Text.cpp,
+	Bar.cpp,
+	EditPos.cpp,
+	ImlFile.cpp,
+	IconDes.lay,
+	IconDes.iml,
+	Info readonly separator,
+	Copying;
+
