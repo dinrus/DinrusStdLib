@@ -13,7 +13,7 @@ void BufferPainter::BeginOnPathOp(double q, bool abs)
 		Pointf pos(0, 0);
 		for(int i = 0; i < onpath.GetCount(); i++) {
 			PathLine& l = onpath[i];
-			if(l.len > 0 && (l.len > q || q >= 1.0 && i == onpath.GetCount() - 1)) {
+			if(l.len > 0 && (l.len > q || (q >= 1.0 && i == onpath.GetCount() - 1))) {
 				Pointf v = l.p - pos;
 				Translate(q / l.len * v + pos);
 				Rotate(Bearing(v));

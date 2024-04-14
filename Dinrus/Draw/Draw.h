@@ -37,7 +37,7 @@ class FontInfo;
 inline
 bool PreferColorEmoji(int c)
 { // для этих кодпойнтов предпочитается замена color emoji, даже если глиф есть в шрифте
-	return c >= 0x2600 && c <= 0x27ef || c >= 0x1f004 && c <= 0x1f251 || c >= 0x1f300 && c <= 0x1faf6;
+	return (c >= 0x2600 && c <= 0x27ef) || (c >= 0x1f004 && c <= 0x1f251) || (c >= 0x1f300 && c <= 0x1faf6);
 }
 
 class Font : public ValueType<Font, FONT_V, Moveable<Font> >{

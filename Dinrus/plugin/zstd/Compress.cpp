@@ -98,7 +98,7 @@ void ZstdCompressStream::_Put(const void *data, dword size)
 	const char *s = reinterpret_cast<const char *>(data);
 
 	while(size > 0) {
-		if(IsError() || out && out->IsError())
+		if(IsError() || (out && out->IsError()))
 			return;
 		dword n = dword(wrlim - ptr);
 		if(size >= n) {

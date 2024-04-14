@@ -422,10 +422,13 @@ Value GetChameleonSample()
 Image WithRect(Image m, int x, int y, int cx, int cy, Color c)
 {
 	ImageBuffer ib(m);
-	for(int i = 0; i < cx; i++)
+	for(int i = 0; i < cx; i++){
 		for(int j = 0; j < cy; j++)
 			ib[y + j][x + i] = c;
+		
+	}
 		return static_cast<Image>(ib);
+	
 }
 
 Image WithLeftLine(const Image& m, Color c, int w)

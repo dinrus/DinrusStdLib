@@ -77,7 +77,7 @@ String TcpSocket::SSLImp::GetErrorText(int code) const
 #ifdef PLATFORM_WIN32
 		SSLERR(SSL_ERROR_WANT_ACCEPT)
 #endif
-		default: out = "unknown code"; break;
+		default: out = "неизвестный код"; break;
 	}
 	return out;
 }

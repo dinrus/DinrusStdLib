@@ -7,7 +7,8 @@ acceptflags
 
 uses
 	Dinrus/plugin/z,
-	Dinrus/plugin/zstd;
+	Dinrus/plugin/zstd,
+	Dinrus/unwind;
 
 library(LINUX !ANDROID) "pthread dl rt";
 

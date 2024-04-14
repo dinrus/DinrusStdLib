@@ -147,7 +147,7 @@ Buffer<ClippingLine> BufferPainter::RenderPath(double width, Event<One<SpanSourc
 
 	current = Null;
 
-	if(width == 0 || !ss && color.a == 0 && (int)width >= FILL) {
+	if(width == 0 || (!ss && color.a == 0 && (int)width >= FILL)) {
 		if(co && ++emptycount + jobcount >= BATCH_SIZE) { // not to exhaust 'paths'
 			FinishPathJob();
 			FinishFillJob();

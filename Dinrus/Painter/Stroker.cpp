@@ -41,10 +41,10 @@ void Stroker::Round(const Pointf& p, const Pointf& v1, const Pointf& v2, double 
 
 inline bool Stroker::PreClipped(Pointf p2, Pointf p3)
 {
-	return p2.x + tw < preclip.left && p3.x + tw < preclip.left ||
-	       p2.x - tw > preclip.right && p3.x - tw > preclip.right ||
-           p2.y + tw < preclip.top && p3.y + tw < preclip.top ||
-	       p2.y - tw > preclip.bottom && p3.y - tw > preclip.bottom;
+	return (p2.x + tw < preclip.left && p3.x + tw < preclip.left) ||
+	       (p2.x - tw > preclip.right && p3.x - tw > preclip.right) ||
+           (p2.y + tw < preclip.top && p3.y + tw < preclip.top) ||
+	       (p2.y - tw > preclip.bottom && p3.y - tw > preclip.bottom);
 }
 
 void Stroker::Line(const Pointf& p3)

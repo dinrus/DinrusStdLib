@@ -278,12 +278,12 @@ bool Image::operator==(const Image& img) const
 {
 	static_assert(sizeof(RGBA) == 4, "sizeof(RGBA)");
 	return IsSame(img) ||
-	   GetSize() == img.GetSize() &&
+	   (GetSize() == img.GetSize() &&
 	   GetHotSpot() == img.GetHotSpot() &&
 	   Get2ndSpot() == img.Get2ndSpot() &&
 	   GetDots() == img.GetDots() &&
 	   GetResolution() == img.GetResolution() &&
-	   memeq_t(~*this, ~img, GetLength());
+	   memeq_t(~*this, ~img, GetLength()));
 }
 
 bool Image::operator!=(const Image& img) const

@@ -27,9 +27,11 @@ topic "";
 [s1;%- &]
 [s2;:SubpixelFiller`:`:RenderN`(int`,int`,int`):%- [@(0.0.255) void]_[* RenderN]([@(0.0.255) i
 nt]_[*@3 val], [@(0.0.255) int]_[*@3 h], [@(0.0.255) int]_[*@3 n])&]
-[s3; This function adds 1 `- 6 val values to filtered subpixel buffer 
-in single pass (6 is just enough needed for Render optimizations). 
-Case variants are created by adding shifted Render filtering 
-procedures.&]
+[s3; Добавляет значения 1 `- 6 val в буфр отфильтрова
+нных субпикселей за одну проходку 
+(6 требуется только для оптимизаций 
+обозражения Render). Варианты с выбором 
+(case) создаются добавлением процедур 
+фильтрации со сдвигом Render.&]
 [s4; &]
 [s0; ]]

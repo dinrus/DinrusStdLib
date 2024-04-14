@@ -43,7 +43,7 @@ enum Kind {
 
 inline bool IsCppType(int i)
 {
-	return i >= STRUCT && i <= TYPEDEF || i == FRIENDCLASS;
+	return (i >= STRUCT && i <= TYPEDEF) || i == FRIENDCLASS;
 }
 
 inline bool IsCppCode(int i) {
@@ -59,7 +59,7 @@ inline bool IsCppMacro(int i) {
 }
 
 inline bool IsCppTemplate(int i) {
-	return i == STRUCTTEMPLATE || i >= FUNCTIONTEMPLATE && i <= CLASSFUNCTIONTEMPLATE;
+	return i == STRUCTTEMPLATE || (i >= FUNCTIONTEMPLATE && i <= CLASSFUNCTIONTEMPLATE);
 }
 
 void   CleanPP();

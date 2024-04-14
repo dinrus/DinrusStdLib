@@ -449,7 +449,7 @@ void SvgParser::Element(const XmlNode& n, int depth, bool dosymbols)
 		FinishElement();
 	}
 	else
-	if(n.IsTag("g") || n.IsTag("symbol") && dosymbols)
+	if(n.IsTag("g") || (n.IsTag("symbol") && dosymbols))
 		Items(n, depth);
 	else
 	if(n.IsTag("use")) {

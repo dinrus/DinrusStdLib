@@ -28,7 +28,7 @@ void CoWork::Pool::InitThreads(int nthreads)
 {
 	LLOG("Pool::InitThreads: " << nthreads);
 	for(int i = 0; i < nthreads; i++)
-		CHECK(threads.Add().RunNice([=, this] { worker_index = i; ThreadRun(i); }, true));
+		CHECK(threads.Add().RunNice([=] { worker_index = i; ThreadRun(i); }, true));
 }
 
 void CoWork::Pool::ExitThreads()

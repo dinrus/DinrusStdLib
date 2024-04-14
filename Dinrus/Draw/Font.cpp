@@ -90,7 +90,7 @@ void Font::SetFace(int index, const String& name)
 
 int FontFilter(int c)
 {
-	return c >= 'a' && c <= 'z' || c >= '0' && c <= '9' ? c : c >= 'A' && c <= 'Z' ? ToLower(c) : 0;
+	return (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') ? c : (c >= 'A' && c <= 'Z') ? ToLower(c) : 0;
 }
 
 int  Font::FindFaceNameIndex(const String& name) {

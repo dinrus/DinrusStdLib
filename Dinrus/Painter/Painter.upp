@@ -27,7 +27,7 @@ file
 	AlphaBlend.h,
 	Fillers.h,
 	Fillers.cpp,
-	BufferDinrus/Painter.h,
+	BufferPainter.h,
 	Context.cpp,
 	Path.cpp,
 	Render.cpp,
