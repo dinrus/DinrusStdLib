@@ -107,7 +107,6 @@ typedef struct {
     struct _xthread_waiter *waiters;
 } xcondition_rec;
 typedef CRITICAL_SECTION xmutex_rec;
-extern void _Xthread_init(void);
 #    define xthread_init() _Xthread_init()
 #    define xthread_self GetCurrentThreadId
 #    define xthread_fork(func,closure) { \

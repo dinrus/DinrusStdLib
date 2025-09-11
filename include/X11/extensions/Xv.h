@@ -4,13 +4,13 @@ and the Massachusetts Institute of Technology, Cambridge, Massachusetts.
 
                         All Rights Reserved
 
-Permission to use, copy, modify, and distribute this software and its
-documentation for any purpose and without fee is hereby granted,
+Permission to use, copy, modify, and distribute this software and its 
+documentation for any purpose and without fee is hereby granted, 
 provided that the above copyright notice appear in all copies and that
-both that copyright notice and this permission notice appear in
+both that copyright notice and this permission notice appear in 
 supporting documentation, and that the names of Digital or MIT not be
 used in advertising or publicity pertaining to distribution of the
-software without specific, written prior permission.
+software without specific, written prior permission.  
 
 DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
 ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
@@ -25,11 +25,11 @@ SOFTWARE.
 #ifndef XV_H
 #define XV_H
 /*
-** File:
+** File: 
 **
 **   Xv.h --- Xv shared library and server header file
 **
-** Author:
+** Author: 
 **
 **   David Carver (Digital Workstation Engineering/Project Athena)
 **
@@ -59,8 +59,8 @@ typedef XID XvEncodingID;
 #define XvInput          0
 #define XvOutput         1
 
-#define XvInputMask      (1<<XvInput)
-#define XvOutputMask     (1<<XvOutput)
+#define XvInputMask      (1L<<XvInput)
+#define XvOutputMask     (1L<<XvOutput)
 #define XvVideoMask	 0x00000004
 #define XvStillMask	 0x00000008
 #define XvImageMask	 0x00000010
@@ -100,13 +100,13 @@ typedef XID XvEncodingID;
 
 #define XvNumReasons (XvLastReason + 1)
 
-#define XvStartedMask     (1<<XvStarted)
-#define XvStoppedMask     (1<<XvStopped)
-#define XvBusyMask        (1<<XvBusy)
-#define XvPreemptedMask   (1<<XvPreempted)
-#define XvHardErrorMask   (1<<XvHardError)
+#define XvStartedMask     (1L<<XvStarted)
+#define XvStoppedMask     (1L<<XvStopped)
+#define XvBusyMask        (1L<<XvBusy)
+#define XvPreemptedMask   (1L<<XvPreempted)
+#define XvHardErrorMask   (1L<<XvHardError)
 
-#define XvAnyReasonMask   ((1<<XvNumReasons) - 1)
+#define XvAnyReasonMask   ((1L<<XvNumReasons) - 1)
 #define XvNoReasonMask    0
 
 /* Errors */

@@ -1,0 +1,29 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.fly.phone.launcher.FlyCallDbusNotifier">
+    <signal name="callChanged">
+      <arg name="incoming" type="b" direction="out"/>
+    </signal>
+    <signal name="callAddedToDb">
+      <arg name="id" type="i" direction="out"/>
+    </signal>
+    <signal name="statusChanged">
+      <arg name="status" type="s" direction="out"/>
+    </signal>
+    <signal name="dial">
+      <arg name="phone" type="s" direction="out"/>
+    </signal>
+    <method name="emitCallChanged">
+      <arg name="incoming" type="b" direction="in"/>
+    </method>
+    <method name="emitCallAddedToDb">
+      <arg name="id" type="i" direction="in"/>
+    </method>
+    <method name="emitStatusChanged">
+      <arg name="status" type="s" direction="in"/>
+    </method>
+    <method name="emitDial">
+      <arg name="phone" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>

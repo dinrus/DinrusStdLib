@@ -22,10 +22,11 @@
 
 #ifndef _NOTIFY_NOTIFICATION_H_
 #define _NOTIFY_NOTIFICATION_H_
-
+  
 #include <glib.h>
 #include <glib-object.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+
 
 G_BEGIN_DECLS
 
@@ -39,8 +40,9 @@ G_BEGIN_DECLS
 /**
  * NOTIFY_EXPIRES_NEVER:
  *
- * The notification never expires. It stays open until closed by the calling API
- * or the user.
+ * The notification never expires.
+ *
+ * It stays open until closed by the calling API or the user.
  */
 #define NOTIFY_EXPIRES_NEVER    0
 
@@ -55,6 +57,18 @@ typedef struct _NotifyNotification NotifyNotification;
 typedef struct _NotifyNotificationClass NotifyNotificationClass;
 typedef struct _NotifyNotificationPrivate NotifyNotificationPrivate;
 
+/**
+ * NotifyNotification:
+ *
+ * A passive pop-up notification.
+ *
+ * #NotifyNotification represents a passive pop-up notification. It can
+ * contain summary text, body text, and an icon, as well as hints specifying
+ * how the notification should be presented. The notification is rendered
+ * by a notification daemon, and may present the notification in any number
+ * of ways. As such, there is a clear separation of content and presentation,
+ * and this API enforces that.
+ */
 struct _NotifyNotification
 {
         /*< private >*/
@@ -88,11 +102,34 @@ typedef enum
 
 } NotifyUrgency;
 
+
+/**
+ * NotifyClosedReason:
+ * @NOTIFY_CLOSED_REASON_UNSET: Notification not closed.
+ * @NOTIFY_CLOSED_REASON_EXPIRED: Timeout has expired.
+ * @NOTIFY_CLOSED_REASON_DISMISSED: It has been dismissed by the user.
+ * @NOTIFY_CLOSED_REASON_API_REQUEST: It has been closed by a call to
+ *   [method@NotifyNotification.close].
+ * @NOTIFY_CLOSED_REASON_UNDEFIEND: Closed by undefined/reserved reasons.
+ *
+ * The reason for which the notification has been closed.
+ *
+ * Since: 0.8.0
+ */
+typedef enum
+{
+        NOTIFY_CLOSED_REASON_UNSET = -1,
+        NOTIFY_CLOSED_REASON_EXPIRED = 1,
+        NOTIFY_CLOSED_REASON_DISMISSED = 2,
+        NOTIFY_CLOSED_REASON_API_REQUEST = 3,
+        NOTIFY_CLOSED_REASON_UNDEFIEND = 4,
+} NotifyClosedReason;
+
 /**
  * NotifyActionCallback:
- * @notification:
- * @action:
- * @user_data:
+ * @notification: a #NotifyActionCallback notification
+ * @action: (transfer none): The activated action name
+ * @user_data: (nullable) (transfer none): User provided data
  *
  * An action callback function.
  */
@@ -104,8 +141,9 @@ typedef void    (*NotifyActionCallback) (NotifyNotification *notification,
  * NOTIFY_ACTION_CALLBACK:
  * @func: The function to cast.
  *
- * A convenience macro for casting a function to a #NotifyActionCallback. This
- * is much like G_CALLBACK().
+ * A convenience macro for casting a function to a [callback@ActionCallback].
+ *
+ * This is much like [func@GObject.CALLBACK].
  */
 #define NOTIFY_ACTION_CALLBACK(func) ((NotifyActionCallback)(func))
 
@@ -179,6 +217,8 @@ void                notify_notification_add_action            (NotifyNotificatio
                                                                NotifyActionCallback callback,
                                                                gpointer            user_data,
                                                                GFreeFunc           free_func);
+
+const char         *notify_notification_get_activation_token  (NotifyNotification *notification);
 
 void                notify_notification_clear_actions         (NotifyNotification *notification);
 gboolean            notify_notification_close                 (NotifyNotification *notification,

@@ -1,0 +1,23 @@
+description "Кросплатформная реализация процесса псевдотерминала\377B";
+
+uses
+	drx/Core;
+
+library(WIN32 & !WIN10) "advapi32 user32";
+
+options(WIN32 & !WIN10) -DAGENT_EXE=L\"PtyAgent.exe\";
+
+file
+	PtyProcess.h,
+	PosixPty.cpp,
+	Win32Pty.cpp,
+	Library readonly separator,
+	lib\libwinpty.h,
+	lib\libwinpty.cpp,
+	lib\LICENSE,
+	Meta readonly separator,
+	ReadMe.md,
+	Copying,
+	Docs readonly separator,
+	src.tpp;
+

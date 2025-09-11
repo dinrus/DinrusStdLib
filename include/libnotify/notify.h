@@ -22,8 +22,10 @@
 #ifndef _LIBNOTIFY_NOTIFY_H_
 #define _LIBNOTIFY_NOTIFY_H_
 
-#include <glib.h>
-
+#ifdef DRX_DYNLOADS
+   #include <gdrx/gtkc/libnotify.h>
+#else
+  #include <glib.h>
 #include <libnotify/notification.h>
 #include <libnotify/notify-enum-types.h>
 #include <libnotify/notify-features.h>
@@ -45,5 +47,5 @@ gboolean        notify_get_server_info (char **ret_name,
                                         char **ret_spec_version);
 
 G_END_DECLS
-
+#endif
 #endif /* _LIBNOTIFY_NOTIFY_H_ */

@@ -41,7 +41,7 @@ HB_BEGIN_DECLS
  *
  * Defined if Harfbuzz has been built with cairo support.
  */
-#undef HB_HAS_CAIRO
+#define HB_HAS_CAIRO 1
 
 /**
  * HB_HAS_CORETEXT:

@@ -49,19 +49,19 @@
 typedef struct {
     CARD8   reqType;
     CARD8   damageReqType;
-    CARD16  length;
+    CARD16  length B16;
 } xDamageReq;
 
-/*
+/* 
  * requests and replies
  */
 
 typedef struct {
     CARD8   reqType;
     CARD8   damageReqType;
-    CARD16  length;
-    CARD32  majorVersion;
-    CARD32  minorVersion;
+    CARD16  length B16;
+    CARD32  majorVersion B32;
+    CARD32  minorVersion B32;
 } xDamageQueryVersionReq;
 
 #define sz_xDamageQueryVersionReq   12
@@ -69,14 +69,14 @@ typedef struct {
 typedef struct {
     BYTE    type;   /* X_Reply */
     BYTE    pad1;
-    CARD16  sequenceNumber;
-    CARD32  length;
-    CARD32  majorVersion;
-    CARD32  minorVersion;
-    CARD32  pad2;
-    CARD32  pad3;
-    CARD32  pad4;
-    CARD32  pad5;
+    CARD16  sequenceNumber B16;
+    CARD32  length B32;
+    CARD32  majorVersion B32;
+    CARD32  minorVersion B32;
+    CARD32  pad2 B32;
+    CARD32  pad3 B32;
+    CARD32  pad4 B32;
+    CARD32  pad5 B32;
 } xDamageQueryVersionReply;
 
 #define sz_xDamageQueryVersionReply	32
@@ -84,12 +84,12 @@ typedef struct {
 typedef struct {
     CARD8	reqType;
     CARD8	damageReqType;
-    CARD16	length;
-    Damage	damage;
-    Drawable	drawable;
+    CARD16	length B16;
+    Damage	damage B32;
+    Drawable	drawable B32;
     CARD8	level;
     CARD8	pad1;
-    CARD16	pad2;
+    CARD16	pad2 B16;
 } xDamageCreateReq;
 
 #define sz_xDamageCreateReq		16
@@ -97,8 +97,8 @@ typedef struct {
 typedef struct {
     CARD8	reqType;
     CARD8	damageReqType;
-    CARD16	length;
-    Damage	damage;
+    CARD16	length B16;
+    Damage	damage B32;
 } xDamageDestroyReq;
 
 #define sz_xDamageDestroyReq		8
@@ -106,10 +106,10 @@ typedef struct {
 typedef struct {
     CARD8	reqType;
     CARD8	damageReqType;
-    CARD16	length;
-    Damage	damage;
-    Region	repair;
-    Region	parts;
+    CARD16	length B16;
+    Damage	damage B32;
+    Region	repair B32;
+    Region	parts B32;
 } xDamageSubtractReq;
 
 #define sz_xDamageSubtractReq		16
@@ -117,9 +117,9 @@ typedef struct {
 typedef struct {
     CARD8	reqType;
     CARD8	damageReqType;
-    CARD16	length;
-    Drawable	drawable;
-    Region	region;
+    CARD16	length B16;
+    Drawable	drawable B32;
+    Region	region B32;
 } xDamageAddReq;
 
 #define sz_xDamageAddReq		12
@@ -131,10 +131,10 @@ typedef struct {
 typedef struct {
     CARD8	type;
     CARD8	level;
-    CARD16	sequenceNumber;
-    Drawable	drawable;
-    Damage	damage;
-    Time	timestamp;
+    CARD16	sequenceNumber B16;
+    Drawable	drawable B32;
+    Damage	damage B32;
+    Time	timestamp B32;
     xRectangle	area;
     xRectangle	geometry;
 } xDamageNotifyEvent;

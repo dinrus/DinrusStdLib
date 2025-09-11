@@ -57,21 +57,24 @@ SOFTWARE.
 #  include <sys/isa_defs.h> /* Solaris: defines _LP64 if necessary */
 # endif
 
-#if defined(__SIZEOF_LONG__)
-# if __SIZEOF_LONG__ == 8
-#  define LONG64				/* 32/64-bit architecture */
-# endif
-# elif defined (_LP64) || defined(__LP64__) || \
+# if defined (_LP64) || defined(__LP64__) || \
      defined(__alpha) || defined(__alpha__) || \
      defined(__ia64__) || defined(ia64) || \
      defined(__sparc64__) || \
      defined(__s390x__) || \
      defined(__amd64__) || defined(amd64) || \
      defined(__powerpc64__)
-#  if !defined(__ILP32__) /* amd64-x32 is 32bit */
-#   define LONG64				/* 32/64-bit architecture */
-#  endif /* !__ILP32__ */
+#  define LONG64				/* 32/64-bit architecture */
 # endif
+
+/*
+ * Stuff to handle large architecture machines; the constants were generated
+ * on a 32-bit machine and must correspond to the protocol.
+ */
+# ifdef WORD64
+#  define MUSTCOPY
+# endif /* WORD64 */
+
 
 /*
  * Definition of macro used to set constants for size of network structures;
@@ -95,15 +98,29 @@ SOFTWARE.
  * need them.  Note that bitfields are not guaranteed to be signed
  * (or even unsigned) according to ANSI C.
  */
-# define B32 /* bitfield not needed on architectures with native 32-bit type */
-# define B16 /* bitfield not needed on architectures with native 16-bit type */
-# ifdef LONG64
+# ifdef WORD64
+typedef long INT64;
+typedef unsigned long CARD64;
+#  define B32 :32
+#  define B16 :16
+#  ifdef UNSIGNEDBITFIELDS
+typedef unsigned int INT32;
+typedef unsigned int INT16;
+#  else
+typedef signed int INT32;
+typedef signed int INT16;
+#  endif
+# else
+#  define B32
+#  define B16
+#  ifdef LONG64
 typedef long INT64;
 typedef int INT32;
-# else
+#  else
 typedef long INT32;
-# endif
+#  endif
 typedef short INT16;
+# endif
 
 typedef signed char    INT8;
 
@@ -111,8 +128,10 @@ typedef signed char    INT8;
 typedef unsigned long CARD64;
 typedef unsigned int CARD32;
 # else
-typedef unsigned long long CARD64;
 typedef unsigned long CARD32;
+# endif
+# if !defined(WORD64) && !defined(LONG64)
+typedef unsigned long long CARD64;
 # endif
 typedef unsigned short CARD16;
 typedef unsigned char  CARD8;
@@ -124,23 +143,43 @@ typedef CARD8		BYTE;
 typedef CARD8		BOOL;
 
 /*
- * was definitions for sign-extending bitfields on architectures without
- * native types smaller than 64-bit, now just backwards compatibility
+ * definitions for sign-extending bitfields on 64-bit architectures
  */
-# define cvtINT8toInt(val) (val)
-# define cvtINT16toInt(val) (val)
-# define cvtINT32toInt(val) (val)
-# define cvtINT8toShort(val) (val)
-# define cvtINT16toShort(val) (val)
-# define cvtINT32toShort(val) (val)
-# define cvtINT8toLong(val) (val)
-# define cvtINT16toLong(val) (val)
-# define cvtINT32toLong(val) (val)
+# if defined(WORD64) && defined(UNSIGNEDBITFIELDS)
+#  define cvtINT8toInt(val)   (((val) & 0x00000080) ? ((val) | 0xffffffffffffff00) : (val))
+#  define cvtINT16toInt(val)  (((val) & 0x00008000) ? ((val) | 0xffffffffffff0000) : (val))
+#  define cvtINT32toInt(val)  (((val) & 0x80000000) ? ((val) | 0xffffffff00000000) : (val))
+#  define cvtINT8toShort(val)  cvtINT8toInt(val)
+#  define cvtINT16toShort(val) cvtINT16toInt(val)
+#  define cvtINT32toShort(val) cvtINT32toInt(val)
+#  define cvtINT8toLong(val)  cvtINT8toInt(val)
+#  define cvtINT16toLong(val) cvtINT16toInt(val)
+#  define cvtINT32toLong(val) cvtINT32toInt(val)
+# else
+#  define cvtINT8toInt(val) (val)
+#  define cvtINT16toInt(val) (val)
+#  define cvtINT32toInt(val) (val)
+#  define cvtINT8toShort(val) (val)
+#  define cvtINT16toShort(val) (val)
+#  define cvtINT32toShort(val) (val)
+#  define cvtINT8toLong(val) (val)
+#  define cvtINT16toLong(val) (val)
+#  define cvtINT32toLong(val) (val)
+# endif /* WORD64 and UNSIGNEDBITFIELDS */
 
+
+
+# ifdef MUSTCOPY
+/*
+ * This macro must not cast or else pointers will get aligned and be wrong
+ */
+#  define NEXTPTR(p,t)  (((char *) p) + SIZEOF(t))
+# else /* else not MUSTCOPY, this is used for 32-bit machines */
 /*
  * this version should leave result of type (t *), but that should only be
  * used when not in MUSTCOPY
  */
-# define NEXTPTR(p,t) (((t *)(p)) + 1)
+#  define NEXTPTR(p,t) (((t *)(p)) + 1)
+# endif /* MUSTCOPY - used machines whose C structs don't line up with proto */
 
 #endif /* XMD_H */

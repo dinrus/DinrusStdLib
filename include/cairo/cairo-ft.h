@@ -41,15 +41,13 @@
 
 #if CAIRO_HAS_FT_FONT
 
-/* Fontconfig/Freetype platform-specific font interface */
-
+/* Fontconfig/FreeType platform-specific font interface */
 #ifdef DINRUSPRO
-#include <plugin/freetype/freetype.h>
-#include <plugin/freetype/ft2build.h>
+#include <X/freetype/ft2build.h>
 #else
 #include <ft2build.h>
-#include FT_FREETYPE_H
 #endif
+#include FT_FREETYPE_H
 
 #if CAIRO_HAS_FC_FONT
 #include <fontconfig/fontconfig.h>

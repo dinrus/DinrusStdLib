@@ -1,8 +1,0 @@
-description "Инкапсуляция формата файла изображения  PPM\3770,128,128";
-
-file
-	ppm.h,
-	ppmref.icpp,
-	ppm.cpp,
-	ppmenc.cpp;
-

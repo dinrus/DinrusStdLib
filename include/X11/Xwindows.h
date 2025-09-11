@@ -29,51 +29,34 @@ The Open Group.
 /*
  * This header file has the sole purpose of allowing the inclusion of
  * windows.h without getting any name conflicts with X headers code, by
- * renaming or disabling the conflicting definitions from windows.h
- */
-
-/*
- * Mingw.org versions of the Windows API headers actually avoid
+ * renaming the conflicting definitions from windows.h
+ *
+ * Some (non-Microsoft) versions of the Windows API headers actually avoid
  * making the conflicting definitions if XFree86Server is defined, so we
  * need to remember if that was defined and undefine it during including
  * windows.h (so the conflicting definitions get wrapped correctly), and
- * then redefine it afterwards. (This was never the correct thing to
- * do as it's no help at all to X11 clients which also need to use the
- * Win32 API)
+ * then redefine it afterwards...
+ *
+ * There doesn't seem to be a good way to wrap the min/max macros from
+ * windows.h, so we simply avoid defining them completely, allowing any
+ * pre-existing definition to stand.
+ *
  */
+
 #undef _XFree86Server
 #ifdef XFree86Server
 # define _XFree86Server
 # undef XFree86Server
 #endif
 
-/*
- * There doesn't seem to be a good way to wrap the min/max macros from
- * windows.h, so we simply avoid defining them completely, allowing any
- * pre-existing definition to stand.
- *
- */
 #define NOMINMAX
-
-/*
- * mingw-w64 headers define BOOL as a typedef, protecting against macros
- * mingw.org headers define BOOL in terms of WINBOOL
- * ... so try to come up with something which works with both :-)
- */
-#define _NO_BOOL_TYPEDEF
-#define BOOL WINBOOL
+#define BOOL wBOOL
 #define INT32 wINT32
-#ifdef __x86_64__
-#define INT64 wINT64
-#define LONG64 wLONG64
-#endif
 #undef Status
 #define Status wStatus
 #define ATOM wATOM
 #define BYTE wBYTE
 #define FreeResource wFreeResource
-#pragma push_macro ("ControlMask")
-#undef ControlMask
 #include <windows.h>
 #undef NOMINMAX
 #undef Status
@@ -81,18 +64,9 @@ The Open Group.
 #undef BYTE
 #undef BOOL
 #undef INT32
-#undef INT64
-#undef LONG64
 #undef ATOM
 #undef FreeResource
-#pragma pop_macro ("ControlMask")
 #undef CreateWindowA
-
-/*
- * Older version of this header used to name the windows API bool type wBOOL,
- * rather than more standard name WINBOOL
- */
-#define wBOOL WINBOOL
 
 #ifdef RESOURCE_H
 # undef RT_FONT

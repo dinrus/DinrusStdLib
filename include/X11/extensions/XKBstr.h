@@ -6,19 +6,19 @@ software and its documentation for any purpose and without
 fee is hereby granted, provided that the above copyright
 notice appear in all copies and that both that copyright
 notice and this permission notice appear in supporting
-documentation, and that the name of Silicon Graphics not be
-used in advertising or publicity pertaining to distribution
+documentation, and that the name of Silicon Graphics not be 
+used in advertising or publicity pertaining to distribution 
 of the software without specific prior written permission.
-Silicon Graphics makes no representation about the suitability
+Silicon Graphics makes no representation about the suitability 
 of this software for any purpose. It is provided "as is"
 without any express or implied warranty.
 
-SILICON GRAPHICS DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
-SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+SILICON GRAPHICS DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS 
+SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY 
 AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL SILICON
-GRAPHICS BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL
-DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
-DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+GRAPHICS BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL 
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, 
+DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE 
 OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION  WITH
 THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
@@ -27,21 +27,16 @@ THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #ifndef _XKBSTR_H_
 #define	_XKBSTR_H_
 
-#include <X11/Xfuncproto.h>
 #include <X11/extensions/XKB.h>
 
 #define	XkbCharToInt(v)		((v)&0x80?(int)((v)|(~0xff)):(int)((v)&0x7f))
 #define	XkbIntTo2Chars(i,h,l)	(((h)=((i>>8)&0xff)),((l)=((i)&0xff)))
-#define	Xkb2CharsToInt(h,l)	((short)(((h)<<8)|(l)))
 
-/*
- * The Xkb structs are full of implicit padding to properly align members.
- * We can't clean that up without breaking ABI, so tell clang not to bother
- * complaining about it.
- */
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpadded"
+#if defined(WORD64) && defined(UNSIGNEDBITFIELDS)
+#define	Xkb2CharsToInt(h,l)	((h)&0x80?(int)(((h)<<8)|(l)|(~0xffff)):\
+					  (int)(((h)<<8)|(l)&0x7fff))
+#else
+#define	Xkb2CharsToInt(h,l)	((short)(((h)<<8)|(l)))
 #endif
 
 	/*
@@ -87,12 +82,9 @@ typedef struct _XkbKeyType {
 	XkbModsRec		mods;
 	unsigned char	  	num_levels;
 	unsigned char	  	map_count;
-	/* map is an array of map_count XkbKTMapEntryRec structs */
 	XkbKTMapEntryPtr  	map;
-	/* preserve is an array of map_count XkbModsRec structs */
 	XkbModsPtr  		preserve;
 	Atom		  	name;
-	/* level_names is an array of num_levels Atoms */
 	Atom *			level_names;
 } XkbKeyTypeRec, *XkbKeyTypePtr;
 
@@ -223,8 +215,8 @@ typedef struct	_XkbRedirectKeyAction {
 
 #define	XkbSARedirectVMods(a)		((((unsigned int)(a)->vmods1)<<8)|\
 					((unsigned int)(a)->vmods0))
-#define	XkbSARedirectSetVMods(a,m)	(((a)->vmods1=(((m)>>8)&0xff)),\
-					 ((a)->vmods0=((m)&0xff)))
+#define	XkbSARedirectSetVMods(a,m)	(((a)->vmods_mask1=(((m)>>8)&0xff)),\
+					 ((a)->vmods_mask0=((m)&0xff)))
 #define	XkbSARedirectVModsMask(a)	((((unsigned int)(a)->vmods_mask1)<<8)|\
 					((unsigned int)(a)->vmods_mask0))
 #define	XkbSARedirectSetVModsMask(a,m)	(((a)->vmods_mask1=(((m)>>8)&0xff)),\
@@ -296,14 +288,10 @@ typedef	struct _XkbControls {
 #define	XkbAX_NeedFeedback(c,w)	(XkbAX_AnyFeedback(c)&&XkbAX_NeedOption(c,w))
 
 typedef struct _XkbServerMapRec {
-	/* acts is an array of XkbActions structs, with size_acts entries
-	   allocated, and num_acts entries used. */
 	unsigned short		 num_acts;
 	unsigned short		 size_acts;
 	XkbAction		*acts;
 
-	/* behaviors, key_acts, explicit, & vmodmap are all arrays with
-	   (xkb->max_key_code + 1) entries allocated for each. */
 	XkbBehavior		*behaviors;
 	unsigned short		*key_acts;
 #if defined(__cplusplus) || defined(c_plusplus)
@@ -330,20 +318,15 @@ typedef	struct _XkbSymMapRec {
 } XkbSymMapRec, *XkbSymMapPtr;
 
 typedef struct _XkbClientMapRec {
-	/* types is an array of XkbKeyTypeRec structs, with size_types entries
-	   allocated, and num_types entries used. */
 	unsigned char		 size_types;
 	unsigned char		 num_types;
 	XkbKeyTypePtr		 types;
 
-	/* syms is an array of size_syms KeySyms, in which num_syms are used */
 	unsigned short		 size_syms;
 	unsigned short		 num_syms;
 	KeySym			*syms;
-	/* key_sym_map is an array of (max_key_code + 1) XkbSymMapRec structs */
 	XkbSymMapPtr		 key_sym_map;
 
-	/* modmap is an array of (max_key_code + 1) unsigned chars */
 	unsigned char		*modmap;
 } XkbClientMapRec, *XkbClientMapPtr;
 
@@ -371,8 +354,6 @@ typedef struct _XkbSymInterpretRec {
 } XkbSymInterpretRec,*XkbSymInterpretPtr;
 
 typedef struct _XkbCompatMapRec {
-	/* sym_interpret is an array of XkbSymInterpretRec structs,
-	   in which size_si are allocated & num_si are used. */
 	XkbSymInterpretPtr	 sym_interpret;
 	XkbModsRec		 groups[XkbNumKbdGroups];
 	unsigned short		 num_si;
@@ -394,7 +375,7 @@ typedef struct _XkbIndicatorMapRec {
 			     ((i)->ctrls)))
 #define	XkbIM_InUse(i)	(((i)->flags)||((i)->which_groups)||\
 					((i)->which_mods)||((i)->ctrls))
-
+	
 
 typedef struct _XkbIndicatorRec {
 	unsigned long	  	phys_indicators;
@@ -402,16 +383,16 @@ typedef struct _XkbIndicatorRec {
 } XkbIndicatorRec,*XkbIndicatorPtr;
 
 typedef	struct _XkbKeyNameRec {
-	char	name[XkbKeyNameLength]	_X_NONSTRING;
+	char	name[XkbKeyNameLength];
 } XkbKeyNameRec,*XkbKeyNamePtr;
 
 typedef struct _XkbKeyAliasRec {
-	char	real[XkbKeyNameLength]	_X_NONSTRING;
-	char	alias[XkbKeyNameLength]	_X_NONSTRING;
+	char	real[XkbKeyNameLength];
+	char	alias[XkbKeyNameLength];
 } XkbKeyAliasRec,*XkbKeyAliasPtr;
 
 	/*
-	 * Names for everything
+	 * Names for everything 
 	 */
 typedef struct _XkbNamesRec {
 	Atom		  keycodes;
@@ -422,15 +403,11 @@ typedef struct _XkbNamesRec {
 	Atom		  vmods[XkbNumVirtualMods];
 	Atom		  indicators[XkbNumIndicators];
 	Atom		  groups[XkbNumKbdGroups];
-	/* keys is an array of (xkb->max_key_code + 1) XkbKeyNameRec entries */
 	XkbKeyNamePtr	  keys;
-	/* key_aliases is an array of num_key_aliases XkbKeyAliasRec entries */
 	XkbKeyAliasPtr	  key_aliases;
-	/* radio_groups is an array of num_rg Atoms */
 	Atom		 *radio_groups;
 	Atom		  phys_symbols;
 
-	/* num_keys seems to be unused in libX11 */
 	unsigned char	  num_keys;
 	unsigned char	  num_key_aliases;
 	unsigned short	  num_rg;
@@ -549,7 +526,7 @@ typedef struct _XkbChanges {
 } XkbChangesRec, *XkbChangesPtr;
 
 	/*
-	 * These data structures are used to construct a keymap from
+	 * These data structures are used to construct a keymap from 
 	 * a set of components or to list components in the server
 	 * database.
 	 */
@@ -583,8 +560,8 @@ typedef struct _XkbComponentList {
 } XkbComponentListRec, *XkbComponentListPtr;
 
 	/*
-	 * The following data structures describe and track changes to a
-	 * non-keyboard extension device
+	 * The following data structures describe and track changes to a 
+	 * non-keyboard extension device 
 	 */
 typedef struct _XkbDeviceLedInfo {
 	unsigned short			led_class;
@@ -605,7 +582,6 @@ typedef struct _XkbDeviceInfo {
 	unsigned short		supported;
 	unsigned short		unsupported;
 
-	/* btn_acts is an array of num_btn XkbAction entries */
 	unsigned short		num_btns;
 	XkbAction *		btn_acts;
 
@@ -613,8 +589,6 @@ typedef struct _XkbDeviceInfo {
 	unsigned short		num_leds;
 	unsigned short		dflt_kbd_fb;
 	unsigned short		dflt_led_fb;
-	/* leds is an array of XkbDeviceLedInfoRec in which
-	   sz_leds entries are allocated and num_leds entries are used */
 	XkbDeviceLedInfoPtr	leds;
 } XkbDeviceInfoRec,*XkbDeviceInfoPtr;
 
@@ -635,9 +609,5 @@ typedef struct _XkbDeviceChanges {
 	unsigned short		num_btns;
 	XkbDeviceLedChangesRec 	leds;
 } XkbDeviceChangesRec,*XkbDeviceChangesPtr;
-
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
 
 #endif /* _XKBSTR_H_ */

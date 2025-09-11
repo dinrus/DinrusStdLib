@@ -34,26 +34,18 @@ The Open Group.
  */
 
 #undef _XFree86Server
-#ifdef XFree86Server
+#ifdef XFree86Server 
 # define _XFree86Server
 # undef XFree86Server
 #endif
 
-/*
- * mingw-w64 headers define BOOL as a typedef, protecting against macros
- * mingw.org headers define BOOL in terms of WINBOOL
- * ... so try to come up with something which works with both :-)
- */
-#define _NO_BOOL_TYPEDEF
-#define BOOL WINBOOL
+#define BOOL wBOOL
 #define INT32 wINT32
 #undef Status
 #define Status wStatus
 #define ATOM wATOM
 #define BYTE wBYTE
 #define FreeResource wFreeResource
-#pragma push_macro ("ControlMask")
-#undef ControlMask
 #include <winsock2.h>
 #undef Status
 #define Status int
@@ -62,16 +54,9 @@ The Open Group.
 #undef INT32
 #undef ATOM
 #undef FreeResource
-#pragma pop_macro ("ControlMask")
 #undef CreateWindowA
 #undef RT_FONT
 #undef RT_CURSOR
-
-/*
- * Older version of this header used to name the windows API bool type wBOOL,
- * rather than more standard name WINBOOL
- */
-#define wBOOL WINBOOL
 
 #ifdef _XFree86Server
 # define XFree86Server

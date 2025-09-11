@@ -1,7 +1,7 @@
 /* include/SDL_config.h.  Generated from SDL_config.h.in by configure.  */
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2022 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -54,7 +54,7 @@
 
 /* Comment this if you want to build without any C library requirements */
 #define HAVE_LIBC 1
-#if HAVE_LIBC
+#ifdef HAVE_LIBC
 
 /* Useful headers */
 #define STDC_HEADERS 1
@@ -76,8 +76,9 @@
 #define HAVE_STRING_H 1
 #define HAVE_SYS_TYPES_H 1
 #define HAVE_WCHAR_H 1
+#define HAVE_LINUX_INPUT_H 1
 /* #undef HAVE_PTHREAD_NP_H */
-#define HAVE_LIBUNWIND_H 1
+/* #undef HAVE_LIBUNWIND_H */
 
 /* C library functions */
 #define HAVE_DLOPEN 1
@@ -93,6 +94,7 @@
 #define HAVE_UNSETENV 1
 #endif
 #define HAVE_QSORT 1
+#define HAVE_BSEARCH 1
 #define HAVE_ABS 1
 #define HAVE_BCOPY 1
 #define HAVE_MEMSET 1
@@ -100,8 +102,8 @@
 #define HAVE_MEMMOVE 1
 #define HAVE_MEMCMP 1
 #define HAVE_WCSLEN 1
-#define HAVE_WCSLCPY 1
-#define HAVE_WCSLCAT 1
+/* #undef HAVE_WCSLCPY */
+/* #undef HAVE_WCSLCAT */
 /* #undef HAVE__WCSDUP */
 #define HAVE_WCSDUP 1
 #define HAVE_WCSSTR 1
@@ -112,8 +114,8 @@
 #define HAVE_WCSNCASECMP 1
 /* #undef HAVE__WCSNICMP */
 #define HAVE_STRLEN 1
-#define HAVE_STRLCPY 1
-#define HAVE_STRLCAT 1
+/* #undef HAVE_STRLCPY */
+/* #undef HAVE_STRLCAT */
 /* #undef HAVE__STRREV */
 /* #undef HAVE__STRUPR */
 /* #undef HAVE__STRLWR */
@@ -142,6 +144,7 @@
 #define HAVE_STRCASECMP 1
 /* #undef HAVE__STRNICMP */
 #define HAVE_STRNCASECMP 1
+#define HAVE_STRCASESTR 1
 /* #undef HAVE_SSCANF */
 #define HAVE_VSSCANF 1
 /* #undef HAVE_SNPRINTF */
@@ -202,12 +205,15 @@
 /* #undef HAVE_GETPAGESIZE */
 #define HAVE_MPROTECT 1
 #define HAVE_ICONV 1
+/* #undef SDL_USE_LIBICONV */
 #define HAVE_PTHREAD_SETNAME_NP 1
 /* #undef HAVE_PTHREAD_SET_NAME_NP */
 #define HAVE_SEM_TIMEDWAIT 1
 #define HAVE_GETAUXVAL 1
 /* #undef HAVE_ELF_AUX_INFO */
 #define HAVE_POLL 1
+#define HAVE_MEMFD_CREATE 1
+#define HAVE_POSIX_FALLOCATE 1
 #define HAVE__EXIT 1
 
 #else
@@ -226,9 +232,12 @@
 #define HAVE_INOTIFY 1
 /* #undef HAVE_IBUS_IBUS_H */
 #define HAVE_IMMINTRIN_H 1
-#define HAVE_LIBUDEV_H 1
+/* #undef HAVE_LIBUDEV_H */
+/* #undef HAVE_LIBUSB */
 /* #undef HAVE_LIBSAMPLERATE_H */
 /* #undef HAVE_LIBDECOR_H */
+/* #undef HAVE_LSXINTRIN_H */
+/* #undef HAVE_LASXINTRIN_H */
 
 /* #undef HAVE_DDRAW_H */
 /* #undef HAVE_DINPUT_H */
@@ -236,13 +245,13 @@
 /* #undef HAVE_DXGI_H */
 /* #undef HAVE_WINDOWS_GAMING_INPUT_H */
 /* #undef HAVE_XINPUT_H */
-/* #undef HAVE_XINPUT_GAMEPAD_EX */
-/* #undef HAVE_XINPUT_STATE_EX */
 
 /* #undef HAVE_MMDEVICEAPI_H */
 /* #undef HAVE_AUDIOCLIENT_H */
 /* #undef HAVE_TPCSHRD_H */
 /* #undef HAVE_SENSORSAPI_H */
+/* #undef HAVE_ROAPI_H */
+/* #undef HAVE_SHELLSCALINGAPI_H */
 
 /* SDL internal assertion support */
 /* #undef SDL_DEFAULT_ASSERT_LEVEL */
@@ -264,11 +273,13 @@
 /* #undef SDL_VIDEO_DISABLED */
 /* #undef SDL_POWER_DISABLED */
 /* #undef SDL_FILESYSTEM_DISABLED */
+/* #undef SDL_LOCALE_DISABLED */
+/* #undef SDL_MISC_DISABLED */
 
 /* Enable various audio drivers */
 /* #undef SDL_AUDIO_DRIVER_AAUDIO */
 #define SDL_AUDIO_DRIVER_ALSA 1
-#define SDL_AUDIO_DRIVER_ALSA_DYNAMIC "libasound.so.2"
+/* #undef SDL_AUDIO_DRIVER_ALSA_DYNAMIC */
 /* #undef SDL_AUDIO_DRIVER_ANDROID */
 /* #undef SDL_AUDIO_DRIVER_ARTS */
 /* #undef SDL_AUDIO_DRIVER_ARTS_DYNAMIC */
@@ -290,12 +301,11 @@
 /* #undef SDL_AUDIO_DRIVER_NETBSD */
 /* #undef SDL_AUDIO_DRIVER_OPENSLES */
 #define SDL_AUDIO_DRIVER_OSS 1
-/* #undef SDL_AUDIO_DRIVER_OSS_SOUNDCARD_H */
 /* #undef SDL_AUDIO_DRIVER_PAUDIO */
 /* #undef SDL_AUDIO_DRIVER_PIPEWIRE */
 /* #undef SDL_AUDIO_DRIVER_PIPEWIRE_DYNAMIC */
-/* #undef SDL_AUDIO_DRIVER_PULSEAUDIO */
-/* #undef SDL_AUDIO_DRIVER_PULSEAUDIO_DYNAMIC */
+#define SDL_AUDIO_DRIVER_PULSEAUDIO 1
+#define SDL_AUDIO_DRIVER_PULSEAUDIO_DYNAMIC "libpulse.so.0"
 /* #undef SDL_AUDIO_DRIVER_QSA */
 /* #undef SDL_AUDIO_DRIVER_SNDIO */
 /* #undef SDL_AUDIO_DRIVER_SNDIO_DYNAMIC */
@@ -367,12 +377,12 @@
 /* #undef SDL_VIDEO_DRIVER_DIRECTFB_DYNAMIC */
 #define SDL_VIDEO_DRIVER_DUMMY 1
 /* #undef SDL_VIDEO_DRIVER_WINDOWS */
-#define SDL_VIDEO_DRIVER_WAYLAND 1
-#define SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH 1
-#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC "libwayland-client.so.0"
-#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_EGL "libwayland-egl.so.1"
-#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_CURSOR "libwayland-cursor.so.0"
-#define SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_XKBCOMMON "libxkbcommon.so.0"
+/* #undef SDL_VIDEO_DRIVER_WAYLAND */
+/* #undef SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH */
+/* #undef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC */
+/* #undef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_EGL */
+/* #undef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_CURSOR */
+/* #undef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_XKBCOMMON */
 /* #undef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_LIBDECOR */
 #define SDL_VIDEO_DRIVER_X11 1
 /* #undef SDL_VIDEO_DRIVER_RPI */
@@ -381,26 +391,22 @@
 /* #undef SDL_VIDEO_DRIVER_KMSDRM_DYNAMIC_GBM */
 /* #undef SDL_VIDEO_DRIVER_ANDROID */
 /* #undef SDL_VIDEO_DRIVER_EMSCRIPTEN */
-/* #undef SDL_VIDEO_DRIVER_OFFSCREEN */
-#define SDL_VIDEO_DRIVER_X11_DYNAMIC "libX11.so.6"
-#define SDL_VIDEO_DRIVER_X11_DYNAMIC_XEXT "libXext.so.6"
-#define SDL_VIDEO_DRIVER_X11_DYNAMIC_XCURSOR "libXcursor.so.1"
-#define SDL_VIDEO_DRIVER_X11_DYNAMIC_XINERAMA "libXinerama.so.1"
-#define SDL_VIDEO_DRIVER_X11_DYNAMIC_XINPUT2 "libXi.so.6"
-#define SDL_VIDEO_DRIVER_X11_DYNAMIC_XFIXES "libXfixes.so.3"
-#define SDL_VIDEO_DRIVER_X11_DYNAMIC_XRANDR "libXrandr.so.2"
+#define SDL_VIDEO_DRIVER_OFFSCREEN 1
+/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC */
+/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XEXT */
+/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XCURSOR */
+/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XINPUT2 */
+/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XFIXES */
+/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XRANDR */
 /* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XSS */
-/* #undef SDL_VIDEO_DRIVER_X11_DYNAMIC_XVIDMODE */
 #define SDL_VIDEO_DRIVER_X11_XCURSOR 1
 #define SDL_VIDEO_DRIVER_X11_XDBE 1
-#define SDL_VIDEO_DRIVER_X11_XINERAMA 1
 #define SDL_VIDEO_DRIVER_X11_XINPUT2 1
 #define SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH 1
 #define SDL_VIDEO_DRIVER_X11_XFIXES 1
 #define SDL_VIDEO_DRIVER_X11_XRANDR 1
-/* #undef SDL_VIDEO_DRIVER_X11_XSCRNSAVER */
+#define SDL_VIDEO_DRIVER_X11_XSCRNSAVER 1
 #define SDL_VIDEO_DRIVER_X11_XSHAPE 1
-/* #undef SDL_VIDEO_DRIVER_X11_XVIDMODE */
 #define SDL_VIDEO_DRIVER_X11_SUPPORTS_GENERIC_EVENTS 1
 #define SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM 1
 /* #undef SDL_VIDEO_DRIVER_NACL */
@@ -412,20 +418,21 @@
 
 /* #undef SDL_VIDEO_RENDER_D3D */
 /* #undef SDL_VIDEO_RENDER_D3D11 */
-#define SDL_VIDEO_RENDER_OGL 1
-#define SDL_VIDEO_RENDER_OGL_ES 1
+/* #undef SDL_VIDEO_RENDER_D3D12 */
+/* #undef SDL_VIDEO_RENDER_OGL */
+/* #undef SDL_VIDEO_RENDER_OGL_ES */
 #define SDL_VIDEO_RENDER_OGL_ES2 1
 /* #undef SDL_VIDEO_RENDER_DIRECTFB */
 /* #undef SDL_VIDEO_RENDER_METAL */
 
 /* Enable OpenGL support */
-#define SDL_VIDEO_OPENGL 1
-#define SDL_VIDEO_OPENGL_ES 1
+/* #undef SDL_VIDEO_OPENGL */
+/* #undef SDL_VIDEO_OPENGL_ES */
 #define SDL_VIDEO_OPENGL_ES2 1
 /* #undef SDL_VIDEO_OPENGL_BGL */
 /* #undef SDL_VIDEO_OPENGL_CGL */
 #define SDL_VIDEO_OPENGL_EGL 1
-#define SDL_VIDEO_OPENGL_GLX 1
+/* #undef SDL_VIDEO_OPENGL_GLX */
 /* #undef SDL_VIDEO_OPENGL_WGL */
 /* #undef SDL_VIDEO_OPENGL_OSMESA */
 /* #undef SDL_VIDEO_OPENGL_OSMESA_DYNAMIC */
@@ -446,19 +453,27 @@
 /* #undef SDL_POWER_HARDWIRED */
 
 /* Enable system filesystem support */
+/* #undef SDL_FILESYSTEM_ANDROID */
 /* #undef SDL_FILESYSTEM_HAIKU */
 /* #undef SDL_FILESYSTEM_COCOA */
 /* #undef SDL_FILESYSTEM_DUMMY */
+/* #undef SDL_FILESYSTEM_RISCOS */
 #define SDL_FILESYSTEM_UNIX 1
 /* #undef SDL_FILESYSTEM_WINDOWS */
 /* #undef SDL_FILESYSTEM_NACL */
-/* #undef SDL_FILESYSTEM_ANDROID */
 /* #undef SDL_FILESYSTEM_EMSCRIPTEN */
 /* #undef SDL_FILESYSTEM_OS2 */
-/* #undef SDL_FILESYSTEM_RISCOS */
+/* #undef SDL_FILESYSTEM_VITA */
+/* #undef SDL_FILESYSTEM_PSP */
+/* #undef SDL_FILESYSTEM_PS2 */
+
+/* Enable misc subsystem */
+/* #undef SDL_MISC_DUMMY */
+
+/* Enable locale subsystem */
+/* #undef SDL_LOCALE_DUMMY */
 
 /* Enable assembly routines */
-#define SDL_ASSEMBLY_ROUTINES 1
 /* #undef SDL_ALTIVEC_BLITTERS */
 /* #undef SDL_ARM_SIMD_BLITTERS */
 /* #undef SDL_ARM_NEON_BLITTERS */
@@ -470,12 +485,15 @@
 #define SDL_USE_IME 1
 
 /* Enable dynamic udev support */
-#define SDL_UDEV_DYNAMIC "libudev.so.1"
+/* #undef SDL_UDEV_DYNAMIC */
 
 /* Enable dynamic libusb support */
 /* #undef SDL_LIBUSB_DYNAMIC */
 
 /* Enable dynamic libsamplerate support */
 /* #undef SDL_LIBSAMPLERATE_DYNAMIC */
+
+/* Libdecor get min/max content size functions */
+/* #undef SDL_HAVE_LIBDECOR_GET_MIN_MAX */
 
 #endif /* SDL_config_h_ */

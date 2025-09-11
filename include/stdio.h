@@ -1,5 +1,5 @@
 /* Define ISO C stdio on top of C++ iostreams.
-   Copyright (C) 1991-2023 Free Software Foundation, Inc.
+   Copyright (C) 1991-2025 Free Software Foundation, Inc.
    Copyright The GNU Toolchain Authors.
    This file is part of the GNU C Library.
 
@@ -139,7 +139,7 @@ typedef __fpos64_t fpos64_t;
 #define FOPEN_MAX 16
 
 
-#if __GLIBC_USE (ISOC2X)
+#if __GLIBC_USE (ISOC23)
 /* Maximum length of printf output for a NaN.  */
 # define _PRINTF_NAN_LEN_MAX 4
 #endif
@@ -168,8 +168,11 @@ extern int renameat (int __oldfd, const char *__old, int __newfd,
 #ifdef __USE_GNU
 /* Flags for renameat2.  */
 # define RENAME_NOREPLACE (1 << 0)
+# define AT_RENAME_NOREPLACE RENAME_NOREPLACE
 # define RENAME_EXCHANGE (1 << 1)
+# define AT_RENAME_EXCHANGE RENAME_EXCHANGE
 # define RENAME_WHITEOUT (1 << 2)
+# define AT_RENAME_WHITEOUT RENAME_WHITEOUT
 
 /* Rename file OLD relative to OLDFD to NEW relative to NEWFD, with
    additional flags.  */
@@ -429,59 +432,7 @@ extern int scanf (const char *__restrict __format, ...) __wur;
 /* Read formatted input from S.  */
 extern int sscanf (const char *__restrict __s,
 		   const char *__restrict __format, ...) __THROW;
-
-/* For historical reasons, the C99-compliant versions of the scanf
-   functions are at alternative names.  When __LDBL_COMPAT or
-   __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI are in effect, this is handled in
-   bits/stdio-ldbl.h.  */
-#include <bits/floatn.h>
-#if !__GLIBC_USE (DEPRECATED_SCANF) && !defined __LDBL_COMPAT \
-    && __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI == 0
-# if __GLIBC_USE (C2X_STRTOL)
-#  ifdef __REDIRECT
-extern int __REDIRECT (fscanf, (FILE *__restrict __stream,
-				const char *__restrict __format, ...),
-		       __isoc23_fscanf) __wur __nonnull ((1));
-extern int __REDIRECT (scanf, (const char *__restrict __format, ...),
-		       __isoc23_scanf) __wur;
-extern int __REDIRECT_NTH (sscanf, (const char *__restrict __s,
-				    const char *__restrict __format, ...),
-			   __isoc23_sscanf);
-#  else
-extern int __isoc23_fscanf (FILE *__restrict __stream,
-			    const char *__restrict __format, ...) __wur
-  __nonnull ((1));
-extern int __isoc23_scanf (const char *__restrict __format, ...) __wur;
-extern int __isoc23_sscanf (const char *__restrict __s,
-			    const char *__restrict __format, ...) __THROW;
-#   define fscanf __isoc23_fscanf
-#   define scanf __isoc23_scanf
-#   define sscanf __isoc23_sscanf
-#  endif
-# else
-#  ifdef __REDIRECT
-extern int __REDIRECT (fscanf, (FILE *__restrict __stream,
-				const char *__restrict __format, ...),
-		       __isoc99_fscanf) __wur __nonnull ((1));
-extern int __REDIRECT (scanf, (const char *__restrict __format, ...),
-		       __isoc99_scanf) __wur;
-extern int __REDIRECT_NTH (sscanf, (const char *__restrict __s,
-				    const char *__restrict __format, ...),
-			   __isoc99_sscanf);
-#  else
-extern int __isoc99_fscanf (FILE *__restrict __stream,
-			    const char *__restrict __format, ...) __wur
-  __nonnull ((1));
-extern int __isoc99_scanf (const char *__restrict __format, ...) __wur;
-extern int __isoc99_sscanf (const char *__restrict __s,
-			    const char *__restrict __format, ...) __THROW;
-#   define fscanf __isoc99_fscanf
-#   define scanf __isoc99_scanf
-#   define sscanf __isoc99_sscanf
-#  endif
-# endif
-#endif
-
+		   
 #ifdef	__USE_ISOC99
 /* Read formatted input from S into argument list ARG.
 
@@ -502,71 +453,7 @@ extern int vscanf (const char *__restrict __format, __gnuc_va_list __arg)
 extern int vsscanf (const char *__restrict __s,
 		    const char *__restrict __format, __gnuc_va_list __arg)
      __THROW __attribute__ ((__format__ (__scanf__, 2, 0)));
-
-/* Same redirection as above for the v*scanf family.  */
-# if !__GLIBC_USE (DEPRECATED_SCANF)
-#  if __GLIBC_USE (C2X_STRTOL)
-#   if defined __REDIRECT && !defined __LDBL_COMPAT	\
-      && __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI == 0
-extern int __REDIRECT (vfscanf,
-		       (FILE *__restrict __s,
-			const char *__restrict __format, __gnuc_va_list __arg),
-		       __isoc23_vfscanf)
-     __attribute__ ((__format__ (__scanf__, 2, 0))) __wur __nonnull ((1));
-extern int __REDIRECT (vscanf, (const char *__restrict __format,
-				__gnuc_va_list __arg), __isoc23_vscanf)
-     __attribute__ ((__format__ (__scanf__, 1, 0))) __wur;
-extern int __REDIRECT_NTH (vsscanf,
-			   (const char *__restrict __s,
-			    const char *__restrict __format,
-			    __gnuc_va_list __arg), __isoc23_vsscanf)
-     __attribute__ ((__format__ (__scanf__, 2, 0)));
-#   elif !defined __REDIRECT
-extern int __isoc23_vfscanf (FILE *__restrict __s,
-			     const char *__restrict __format,
-			     __gnuc_va_list __arg) __wur __nonnull ((1));
-extern int __isoc23_vscanf (const char *__restrict __format,
-			    __gnuc_va_list __arg) __wur;
-extern int __isoc23_vsscanf (const char *__restrict __s,
-			     const char *__restrict __format,
-			     __gnuc_va_list __arg) __THROW;
-#    define vfscanf __isoc23_vfscanf
-#    define vscanf __isoc23_vscanf
-#    define vsscanf __isoc23_vsscanf
-#   endif
-#  else
-#   if defined __REDIRECT && !defined __LDBL_COMPAT	\
-      && __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI == 0
-extern int __REDIRECT (vfscanf,
-		       (FILE *__restrict __s,
-			const char *__restrict __format, __gnuc_va_list __arg),
-		       __isoc99_vfscanf)
-     __attribute__ ((__format__ (__scanf__, 2, 0))) __wur __nonnull ((1));
-extern int __REDIRECT (vscanf, (const char *__restrict __format,
-				__gnuc_va_list __arg), __isoc99_vscanf)
-     __attribute__ ((__format__ (__scanf__, 1, 0))) __wur;
-extern int __REDIRECT_NTH (vsscanf,
-			   (const char *__restrict __s,
-			    const char *__restrict __format,
-			    __gnuc_va_list __arg), __isoc99_vsscanf)
-     __attribute__ ((__format__ (__scanf__, 2, 0)));
-#   elif !defined __REDIRECT
-extern int __isoc99_vfscanf (FILE *__restrict __s,
-			     const char *__restrict __format,
-			     __gnuc_va_list __arg) __wur __nonnull ((1));
-extern int __isoc99_vscanf (const char *__restrict __format,
-			    __gnuc_va_list __arg) __wur;
-extern int __isoc99_vsscanf (const char *__restrict __s,
-			     const char *__restrict __format,
-			     __gnuc_va_list __arg) __THROW;
-#    define vfscanf __isoc99_vfscanf
-#    define vscanf __isoc99_vscanf
-#    define vsscanf __isoc99_vsscanf
-#   endif
-#  endif
-# endif
-#endif /* Use ISO C9x.  */
-
+#endif
 
 /* Read a character from STREAM.
 
@@ -604,9 +491,6 @@ extern int fgetc_unlocked (FILE *__stream) __nonnull ((1));
 /* Write a character to STREAM.
 
    These functions are possible cancellation points and therefore not
-   marked with __THROW.
-
-   These functions is a possible cancellation point and therefore not
    marked with __THROW.  */
 extern int fputc (int __c, FILE *__stream) __nonnull ((2));
 extern int putc (int __c, FILE *__stream) __nonnull ((2));
@@ -685,12 +569,7 @@ extern char *fgets_unlocked (char *__restrict __s, int __n,
    (and null-terminate it). *LINEPTR is a pointer returned from malloc (or
    NULL), pointing to *N characters of space.  It is realloc'd as
    necessary.  Returns the number of characters read (not including the
-   null terminator), or -1 on error or EOF.
-
-   These functions are not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation they are cancellation points and
-   therefore not marked with __THROW.  */
+   null terminator), or -1 on error or EOF.  */
 extern __ssize_t __getdelim (char **__restrict __lineptr,
                              size_t *__restrict __n, int __delimiter,
                              FILE *__restrict __stream) __wur __nonnull ((4));
@@ -698,12 +577,7 @@ extern __ssize_t getdelim (char **__restrict __lineptr,
                            size_t *__restrict __n, int __delimiter,
                            FILE *__restrict __stream) __wur __nonnull ((4));
 
-/* Like `getdelim', but reads up to a newline.
-
-   This function is not part of POSIX and therefore no official
-   cancellation point.  But due to similarity with an POSIX interface
-   or due to the implementation it is a cancellation point and
-   therefore not marked with __THROW.  */
+/* Like `getdelim', but reads up to a newline.  */
 extern __ssize_t getline (char **__restrict __lineptr,
                           size_t *__restrict __n,
                           FILE *__restrict __stream) __wur __nonnull ((3));

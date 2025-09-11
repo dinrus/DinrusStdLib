@@ -37,7 +37,7 @@
 #define XftVersion	XFT_VERSION
 
 #include <stdarg.h>
-#include <ft2build.h>
+#include <freetype2/ft2build.h>
 #include FT_FREETYPE_H
 #include <fontconfig/fontconfig.h>
 #include <X11/extensions/Xrender.h>
@@ -104,6 +104,10 @@ typedef struct _XftGlyphFontSpec {
     short	    x;
     short	    y;
 } XftGlyphFontSpec;
+
+
+//Так как функции в ядро drx загружаются динамически,
+//нужно изолировать их объявления, которым там уже есть прототипы.
 
 _XFUNCPROTOBEGIN
 

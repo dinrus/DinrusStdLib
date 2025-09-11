@@ -1,0 +1,21 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.fly.phone.launcher.SettingsWindowNotifier">
+    <signal name="_settingsChanged">
+      <arg name="group" type="i" direction="out"/>
+      <arg name="key" type="s" direction="out"/>
+      <arg name="value" type="v" direction="out"/>
+    </signal>
+    <method name="showSettingsWindow">
+      <arg name="group" type="i" direction="in"/>
+    </method>
+    <method name="settingsGroupToString">
+      <arg type="s" direction="out"/>
+      <arg name="group" type="i" direction="in"/>
+    </method>
+    <method name="settingsGroupToInt">
+      <arg type="i" direction="out"/>
+      <arg name="group" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>

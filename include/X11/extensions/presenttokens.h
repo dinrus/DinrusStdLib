@@ -25,7 +25,7 @@
 
 #define PRESENT_NAME			"Present"
 #define PRESENT_MAJOR			1
-#define PRESENT_MINOR			2
+#define PRESENT_MINOR			4
 
 #define PresentNumberErrors		0
 #define PresentNumberEvents		0
@@ -36,8 +36,9 @@
 #define X_PresentNotifyMSC		2
 #define X_PresentSelectInput		3
 #define X_PresentQueryCapabilities      4
+#define X_PresentPixmapSynced		5
 
-#define PresentNumberRequests		5
+#define PresentNumberRequests		6
 
 /* Present operation options */
 #define PresentOptionNone               0
@@ -45,11 +46,15 @@
 #define PresentOptionCopy               (1 << 1)
 #define PresentOptionUST                (1 << 2)
 #define PresentOptionSuboptimal         (1 << 3)
+#define PresentOptionAsyncMayTear       (1 << 4)
 
 #define PresentAllOptions       (PresentOptionAsync | \
                                  PresentOptionCopy | \
                                  PresentOptionUST | \
-                                 PresentOptionSuboptimal)
+                                 PresentOptionSuboptimal | \
+                                 PresentOptionAsyncMayTear)
+
+#define PresentAllAsyncOptions (PresentOptionAsync | PresentOptionAsyncMayTear)
 
 /* Present capabilities */
 
@@ -57,10 +62,16 @@
 #define PresentCapabilityAsync          1
 #define PresentCapabilityFence          2
 #define PresentCapabilityUST            4
+#define PresentCapabilityAsyncMayTear   8
+#define PresentCapabilitySyncobj        16
 
 #define PresentAllCapabilities  (PresentCapabilityAsync | \
                                  PresentCapabilityFence | \
-                                 PresentCapabilityUST)
+                                 PresentCapabilityUST | \
+                                 PresentCapabilityAsyncMayTear | \
+                                 PresentCapabilitySyncobj)
+
+#define PresentAllAsyncCapabilities (PresentCapabilityAsync | PresentCapabilityAsyncMayTear)
 
 /* Events */
 #define PresentConfigureNotify	0

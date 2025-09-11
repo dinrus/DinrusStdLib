@@ -1,0 +1,55 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.fly.phone.launcher.FlyMessageDbusNotifier">
+    <signal name="emailRecieved">
+      <arg name="id" type="s" direction="out"/>
+      <arg name="from" type="s" direction="out"/>
+      <arg name="subject" type="s" direction="out"/>
+    </signal>
+    <signal name="emailsRecieved">
+      <arg name="count" type="i" direction="out"/>
+      <arg name="message" type="s" direction="out"/>
+    </signal>
+    <signal name="emailError">
+      <arg name="message" type="s" direction="out"/>
+    </signal>
+    <signal name="incomingSms">
+      <arg name="phone" type="s" direction="out"/>
+      <arg name="text" type="s" direction="out"/>
+    </signal>
+    <signal name="outgoingSms">
+      <arg name="phone" type="s" direction="out"/>
+      <arg name="text" type="s" direction="out"/>
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <signal name="outgoingSmsStatus">
+      <arg name="phone" type="s" direction="out"/>
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <method name="emitEmailRecieved">
+      <arg name="id" type="s" direction="in"/>
+      <arg name="from" type="s" direction="in"/>
+      <arg name="subject" type="s" direction="in"/>
+    </method>
+    <method name="emitEmailsRecieved">
+      <arg name="count" type="i" direction="in"/>
+      <arg name="message" type="s" direction="in"/>
+    </method>
+    <method name="emitEmailError">
+      <arg name="message" type="s" direction="in"/>
+    </method>
+    <method name="emitIncomingSms">
+      <arg name="phone" type="s" direction="in"/>
+      <arg name="text" type="s" direction="in"/>
+    </method>
+    <method name="emitOutgoingSms">
+      <arg name="phone" type="s" direction="in"/>
+      <arg name="text" type="s" direction="in"/>
+      <arg name="id" type="s" direction="in"/>
+    </method>
+    <method name="emitOutgoingSmsStatus">
+      <arg name="status" type="s" direction="in"/>
+      <arg name="id" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>

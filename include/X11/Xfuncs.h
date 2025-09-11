@@ -1,5 +1,5 @@
 /*
- *
+ * 
 Copyright 1990, 1998  The Open Group
 
 Permission to use, copy, modify, distribute, and sell this software and its
@@ -37,14 +37,14 @@ void bcopy();
 void bzero();
 int bcmp();
 #  else
-#   if defined(SYSV) && !defined(__SCO__) && !defined(__sun) && !defined(__UNIXWARE__) && !defined(_AIX)
+#   if defined(SYSV) && !defined(__SCO__) && !defined(__sun) && !defined(__UNIXWARE__)
 #    include <memory.h>
 void bcopy();
 #    define bzero(b,len) memset(b, 0, len)
 #    define bcmp(b1,b2,len) memcmp(b1, b2, len)
 #   else
 #    include <string.h>
-#    if defined(__SCO__) || defined(__sun) || defined(__UNIXWARE__) || defined(__CYGWIN__) || defined(_AIX) || defined(__APPLE__)
+#    if defined(__SCO__) || defined(__sun) || defined(__UNIXWARE__) || defined(__CYGWIN__)
 #     include <strings.h>
 #    endif
 #    define _XFUNCS_H_INCLUDED_STRING_H

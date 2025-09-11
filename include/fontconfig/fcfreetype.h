@@ -24,13 +24,8 @@
 
 #ifndef _FCFREETYPE_H_
 #define _FCFREETYPE_H_
-#ifdef DINRUSPRO
-#include <plugin/freetype/freetype.h>
-#include <plugin/freetype/ft2build.h>
-#else
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#endif
 
 #ifndef FcPublic
 #define FcPublic
