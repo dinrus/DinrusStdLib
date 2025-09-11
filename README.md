@@ -1,3 +1,3 @@
-# DinrusStdLib
+# DRXStdLib
 
-Стандартная библиотека C/C++ для DinrusIDE и компилятора clang (DinrusPro)
+Стандартная библиотека C/C++ для DRX-framework и компилятора DRUX (DinrusPro)
