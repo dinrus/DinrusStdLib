@@ -170,6 +170,7 @@ Txt Replace(Txt str, char find, char replace) {
 }
 
 // Rename file or folder
+/*
 bool FileMoveX(tukk oldpath, tukk newpath, EXT_FILE_FLAGS flags) {
     bool usr, grp, oth;
     if (flags & DELETE_READ_ONLY) {
@@ -181,7 +182,7 @@ bool FileMoveX(tukk oldpath, tukk newpath, EXT_FILE_FLAGS flags) {
         SetReadOnly(newpath, usr, grp, oth);
     return ret;
 }
-
+*/
 bool FileDeleteX(tukk path, EXT_FILE_FLAGS flags) {
     if (flags & USE_TRASH_BIN)
         return FileToTrashBin(path);
@@ -344,7 +345,7 @@ Txt GetAbsolutePath(Txt from, Txt relative) {
     }
     return AppendFNameX(from, relative);
 }
-
+/*
 bool SetReadOnly(tukk path, bool readOnly) {
     return SetReadOnly(path, readOnly, readOnly, readOnly);
 }
@@ -405,6 +406,7 @@ bool IsReadOnly(tukk path, bool &usr, bool &grp, bool &oth) {
     return true;
 #endif
 }
+*/
 
 #ifdef TARGET_POSIX
 
