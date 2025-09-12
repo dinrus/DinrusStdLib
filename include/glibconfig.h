@@ -1,1 +1,0 @@
-/home/drx/.drx/DinrusPro/drxtk/lib/glib-2.0/include/glibconfig.h

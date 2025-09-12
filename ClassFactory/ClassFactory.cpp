@@ -1,8 +1,0 @@
-#include "ClassFactory.h"
-
-NAMESPACE_UPP
-
-Txt CLASSFACTORY_UNKNOWN = "*UNKNOWN*";
-
-END_DRX_NAMESPACE
-

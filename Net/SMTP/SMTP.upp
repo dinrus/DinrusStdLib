@@ -1,7 +1,0 @@
-description "Простой протокол отправки почты (SMTP)\377B0,128,128";
-
-file
-	SMTP.h,
-	Smtp.cpp,
-	src.tpp;
-
