@@ -1,0 +1,8 @@
+description "Генерная фабрика классов - Активирует некий продвинутый RTTI\377128,0,255";
+
+file
+	ClassFactory.h,
+	ClassFactory.cpp,
+	srcdoc.tpp,
+	src.tpp;
+

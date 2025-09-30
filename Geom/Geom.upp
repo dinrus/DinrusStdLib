@@ -1,0 +1,20 @@
+description "Математика  геометрии 2D и 3D. В чём-то устаревшая.\377";
+
+uses
+	drx/Core;
+
+file
+	Geom.h,
+	fp3.h,
+	fp3.cpp,
+	geometry.h,
+	geometry.cpp,
+	polyalg.cpp,
+	vecalg.cpp,
+	linsolv.h,
+	linsolv.cpp,
+	delaunay.h,
+	delaunay.cpp,
+	Info readonly separator,
+	Copying;
+

@@ -1,0 +1,35 @@
+template "Консольный проект U++ Core" main;
+
+option "Создать заголовочник" header;
+option "Цикл командной строки" cmdline;
+
+@@<:PACKAGE:>.h
+??header
+#ifndef _<:PACKAGE:>_<:PACKAGE:>_h
+#define _<:PACKAGE:>_<:PACKAGE:>_h
+
+#include <drx/Core/Core.h>
+
+using namespace drx;
+
+#endif
+@@<:PACKAGE:>.cpp
+#include <:?header:>"<:PACKAGE:>.h"<:/:><drx/Core/Core.h>
+
+using namespace drx;<:.:>
+
+CONSOLE_APP_MAIN
+{<:?cmdline:>
+	const Vector<Txt>& cmdline = CommandLine();
+	for(i32 i = 0; i < cmdline.GetCount(); i++) {
+	}<:.:>
+}
+@@<:PACKAGE:>.upp
+uses Core;
+
+file<:?header:>
+	<:PACKAGE:>.h,<:.:>
+	<:PACKAGE:>.cpp;
+
+mainconfig
+	"" = "";

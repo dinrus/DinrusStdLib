@@ -1,0 +1,42 @@
+description "Функции и классы для общего применения\377B";
+
+noblitz;
+
+uses
+	drx/PdfDraw;
+
+library(WIN32) oleaut32;
+
+file
+	Funcs4U.cpp,
+	ru.h,
+	Funcs4U.h,
+	Funcs4U_Gui.cpp,
+	Funcs4U_Gui.h,
+	LocalProcess2.cpp,
+	LocalProcess2.h,
+	QtfEquation.cpp,
+	srcdoc.tpp,
+	src.tpp,
+	Funcs4U.t,
+	StaticPlugin readonly separator,
+	StaticPlugin.cpp,
+	StaticPlugin.h,
+	GatherTpp readonly separator,
+	GatherTpp.cpp,
+	GatherTpp.h,
+	SvgColors readonly separator,
+	SvgColors.cpp,
+	SvgColors.h,
+	BSDiff readonly separator,
+	bsdiff.h,
+	Bsdiff\bsadditional.cpp,
+	Bsdiff\bsdiff.cpp,
+	Bsdiff\bspatch.cpp,
+	Bsdiff\Copying,
+	Html readonly separator,
+	Html/htmld.cpp,
+	Html/htmld.h,
+	Copying;
+
+ spellcheck_comments "EN-GB"

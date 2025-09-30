@@ -1,0 +1,47 @@
+description "Пакет служит для сбора исходников при языковой локализации\377";
+
+uses
+	drx/CtrlLib,
+	drx/RichEdit,
+	drx/GridCtrl,
+	drx/SqlCtrl,
+	drx/X/astyle,
+	drx/X/bmp,
+	drx/X/box2d,
+	drx/X/bz2,
+	drx/X/dbf,
+	drx/X/DroidFonts,
+	drx/X/ftp,
+	drx/X/FT_fontsys,
+	drx/X/gif,
+	drx/X/glew,
+	drx/X/jpg,
+	drx/X/lz4,
+	drx/X/lzma,
+	drx/X/ndisasm,
+	drx/X/pcre,
+	drx/X/pcx,
+	drx/X/png,
+	drx/X/ppm,
+	drx/X/sqlite3,
+	drx/X/tif,
+	drx/X/z,
+	drx/X/zip,
+	drx/Core/POP3,
+	drx/Core/Rpc,
+	drx/Core/SMTP,
+	drx/Core/SSL,
+	drx/Oracle,
+	drx/MySql,
+	drx/PostgreSQL,
+	drx/ODBC,
+	drx/Funcs4U,
+	drx/TabBar;
+
+file
+	main.cpp;
+
+mainconfig
+	"" = "GUI",
+	"" = "SO";
+
