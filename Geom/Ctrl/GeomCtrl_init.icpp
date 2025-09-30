@@ -1,8 +1,0 @@
-#include "GeomCtrl.h"
-
-namespace drx {
-
-#define TFILE <Geom/Ctrl/GeomCtrl.t>
-#include <drx/Core/t.h>
-
-}
