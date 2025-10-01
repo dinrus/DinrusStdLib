@@ -1,0 +1,12 @@
+description "\377B";
+
+uses
+	drx/Net/POP3,
+	drx/Net/Rpc,
+	drx/Net/SMTP,
+	drx/Net/SSH,
+	drx/Net/SSL;
+
+file
+	drx.cpp;
+

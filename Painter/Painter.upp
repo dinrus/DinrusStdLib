@@ -1,0 +1,52 @@
+description "Программный рендеринг 2D с мощью PDF/SVG\377B";
+
+noblitz;
+
+uses
+	drx/Draw;
+
+file
+	Painter.h options(BUILDER_OPTION) PCH,
+	Painter.hpp,
+	Painting.h,
+	LinearPath.h,
+	Interpolator.hpp,
+	AlphaBlend.h,
+	Fillers.h,
+	BufferPainter.h,
+	SVG readonly separator,
+	SvgInternal.h,
+	code readonly separator,
+	code/Approximate.cpp,
+	code/Context.cpp,
+	code/Dasher.cpp,
+	code/DrawOp.cpp,
+	code/Fillers.cpp,
+	code/FontX11.cpp,
+	code/Gradient.cpp,
+	code/Image.cpp,
+	code/Mask.cpp,
+	code/OnPath.cpp,
+	code/Painter.cpp,
+	code/PainterPath.cpp,
+	code/Painting.cpp,
+	code/PaintPainting.cpp,
+	code/Path.cpp,
+	code/RadialGradient.cpp,
+	code/Rasterizer.cpp,
+	code/RasterizerClip.cpp,
+	code/Render.cpp,
+	code/RenderChar.cpp,
+	code/Stroker.cpp,
+	code/SvgArc.cpp,
+	code/SvgBounds.cpp,
+	code/SvgParser.cpp,
+	code/SvgStyle.cpp,
+	code/SvgUtil.cpp,
+	code/Transformer.cpp,
+	code/Xform2D.cpp,
+	Info readonly separator,
+	srcimp.tpp,
+	Copying,
+	src.tpp;
+
