@@ -1,0 +1,38 @@
+description "Функции для работы с ОС, железом и Рабочим Столом\377B";
+
+uses
+	drx/Core,
+	drx/Funcs4U;
+
+library
+	"X11 Xtst";
+
+library(WIN32) "ws2_32 psapi gdi32 vfw32 oleaut32 iphlpapi powrprof netapi32 wbemuuid";
+
+options(MSC) "/D PSAPI_VERSION=1";
+
+link(POSIX | LINUX | FREEBSD) "-lX11 -lXtst";
+
+link(POSIX & !NO_XTEST) -lXtst;
+
+file
+	SysInfo.cpp,
+	SysInfo.h,
+	SysInfo_in.h,
+	OS.cpp,
+	OSwin.c,
+	OSwin.h,
+	srcdoc.tpp,
+	ScreenGrab.cpp,
+	MouseKey.cpp,
+	CPUSpeed.cpp,
+	Battery.cpp,
+	srcdoc.tpp,
+	src.tpp,
+	srcimp.tpp,
+	drx/SysInfo.t,
+	Copying,
+	Crash.cpp,
+	Crash.h;
+
+ spellcheck_comments "RU-RU"

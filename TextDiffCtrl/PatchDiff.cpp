@@ -1,0 +1,222 @@
+#include "TextDiffCtrl.h"
+
+namespace drx {
+
+PatchDiff::PatchDiff()
+{
+	Icon(DiffImg::PatchDiff());
+
+	hidden.Hide();
+	
+	copyright.Remove();
+	removeright.Remove();
+	revertright.Remove();
+
+	recent.Hide();
+
+	left.Height(EditField::GetStdHeight());
+	left.Add(lfile.HSizePosZ(0, 148));
+	left.Add(removeleft.VSizePos().RightPosZ(0, 70));
+	left.Add(revertleft.VSizePos().RightPosZ(74, 70));
+
+	right.Add(rfile.VSizePos().HSizePosZ(74, 0));
+	right.Add(copyleft.VSizePos().LeftPosZ(0, 70));
+	
+	copyleft.SetLabel("Патч");
+	
+	files.WhenSel = [=, this] { File(); };
+	
+	dir1.Ctrl::Remove();
+	dir2.Ctrl::Remove();
+
+	i32 cy = patch_file.GetStdSize().cy;
+	i32 div = Zy(4);
+	files_pane.Add(target_dir.TopPos(0, cy).HSizePos());
+	files_pane.Add(patch_file.TopPos(cy + div, cy).HSizePos());
+	patch_file.SetReadOnly();
+	target_dir.SetReadOnly();
+	
+	seldir.Attach(target_dir);
+	seldir.Title("Целевая папка");
+	selfile.Attach(patch_file);
+	selfile.Title("Пропатчить файл");
+	selfile.Types("Пропатчить файлы (*.diff *.patch)\t*.diff *.patch\nВсе файлы\t*.*");
+	
+	seldir.WhenSelected = selfile.WhenSelected = [=, this] {
+		Open(~~patch_file, Vec<Txt>() << ~seldir);
+	};
+	
+	files_pane.Add(failed.TopPos(2 * cy + 2 * div, cy).HSizePos());
+	
+	compare.SetLabel("Пропатчить все");
+	compare ^= [=, this] {
+		Txt msg = "Пропатчить всё?";
+		if(failed_count)
+			msg << "&[/ (" << failed_count << " файлов не удаётся пропатчить)";
+		if(files.GetCount() == 0 || !PromptYesNo(msg))
+			return;
+		Progress pi("Патчирование", patch.GetCount());
+		for(i32 i = 0; i < patch.GetCount(); i++) {
+			if(pi.StepCanceled())
+				return;
+			Txt p = patch.GetPath(i);
+			Txt h = patch.GetPatchedFile(i, GetBackup(p));
+			if(!h.IsVoid()) {
+				if(IsNull(h))
+					FileDelete(p);
+				else
+					SaveFile(p, h);
+			}
+		}
+		Break(IDOK);
+	};
+
+	removeleft ^= [=, this] {
+		Backup(file_path);
+		SaveFile(file_path, diff.left.RemoveSelected(HasCrs(file_path)));
+		Refresh();
+	};
+
+	copyleft ^= [=, this] {
+		i32 ii = GetFileIndex();
+		if(ii < 0 || patched_file.IsVoid())
+			return;
+		if(diff.right.IsSelection()) {
+			Backup(file_path);
+			SaveFile(file_path, diff.Merge(true, HasCrs(file_path)));
+			Refresh();
+			return;
+		}
+		if(PromptYesNo("Пропатчить [* \1" + file_path + "\1] ?")) {
+			Backup(file_path);
+			if(IsNull(patched_file))
+				FileDelete(file_path);
+			else
+				SaveFile(file_path, patched_file);
+			list[ii].d = 4;
+			files.Set(files.GetCursor(), MakeFile(ii));
+			Refresh();
+		}
+	};
+
+	revertleft ^= [=, this] {
+		i32 q = backup.Find(file_path);
+		if(q >= 0 && PromptYesNo("Убрать изменения?")) {
+			SaveFile(file_path, ZDecompress(backup[q]));
+			backup.Remove(q);
+			Refresh();
+		}
+	};
+
+	Title("Патч");
+}
+
+bool PatchDiff::Open(tukk patch_path, const Vec<Txt>& target_dirs0)
+{
+	failed_count = 0;
+	list.Clear();
+	failed.Hide();
+	ShowResult();
+	patch_file <<= Null;
+	target_dir <<= Null;
+	
+	Vec<Txt> target_dirs;
+	for(Txt s : target_dirs0)
+		target_dirs.Add(UnixPath(s));
+
+	Progress pi;
+	if(!patch.Load(patch_path, pi)) {
+		Exclamation("Не удалось загрузить файл патча!");
+		return false;
+	}
+	
+	patch_file <<= patch_path;
+	
+
+	if(!patch.MatchFiles(target_dirs, pi)) {
+		Exclamation("Не удаётся сверка структуры папки!");
+		return true;
+	}
+
+	Txt target_dir = patch.GetTargetDir();
+
+	this->target_dir <<= target_dir;
+
+	list.Clear();
+	pi.SetText("Проверка файлов");
+	pi.SetTotal(patch.GetCount());
+	for(i32 i = 0; i < patch.GetCount(); i++) {
+		if(pi.StepCanceled())
+			return false;
+		Txt fn = patch.GetFile(i);
+		Txt p = patch.GetPath(i);
+		Txt h = patch.GetPatchedFile(i, GetBackup(p));
+		bool pe = h.GetCount();
+		bool x = FileExists(p);
+		bool failed = h.IsVoid();
+		list.Add(MakeTuple(fn, p, p, failed ? 3 : pe && x ? 0 : pe ? 2 : 1));
+		if(failed)
+			failed_count++;
+	}
+	
+	failed.Show(failed_count);
+	failed.SetInk(SRed());
+	failed = Txt() << failed_count << " файл(а) не удалось";
+
+	ShowResult();
+	
+	if(files.GetCount())
+		files.SetCursor(0);
+	
+	return true;
+}
+
+i32 PatchDiff::GetFileIndex() const
+{
+	i32 ii = files.GetCursor();
+	return ii >= 0 ? (i32)files.Get(ii).data : -1;
+}
+
+Txt PatchDiff::GetBackup(const Txt& path)
+{
+	i32 q = backup.Find(path);
+	return q >= 0 ? ZDecompress(backup[q]) : Txt();
+}
+
+void PatchDiff::File()
+{
+	diff.Set(Null, Null);
+	Txt p2;
+	Txt op = " [PATCHED]";
+	copyleft.Disable();
+	file_path.Clear();
+	patched_file.Clear();
+	i32 ii = GetFileIndex();
+	if(ii >= 0) {
+		file_path = patch.GetPath(ii);
+		if(GetFileLength(file_path) < 4 * 1024 * 1024) {
+			Txt content = LoadFile(file_path);
+			if(list[ii].d == PATCHED_FILE) {
+				p2 = "[FILE IS PATCHED]";
+				diff.Set(content, content);
+			}
+			else {
+				patched_file = patch.GetPatchedFile(ii, GetBackup(file_path));
+				if(patched_file.IsVoid()) {
+					diff.Set(content, patch.GetPatch(ii));
+					p2 = "[FAILED TO APPLY THE PATCH]";
+				}
+				else {
+					diff.Set(content, patched_file);
+					p2 = file_path + " [PATCHED]";
+					copyleft.Enable();
+				}
+			}
+		}
+	}
+	lfile <<= file_path;
+	rfile <<= p2;
+	revertleft.Enable(backup.Find(file_path) >= 0);
+}
+
+};
