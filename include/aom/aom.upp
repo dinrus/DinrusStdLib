@@ -1,0 +1,12 @@
+file
+	aom.h,
+	aom_codec.h,
+	aom_decoder.h,
+	aom_encoder.h,
+	aom_external_partition.h,
+	aom_frame_buffer.h,
+	aom_image.h,
+	aom_integer.h,
+	aomcx.h,
+	aomdx.h;
+

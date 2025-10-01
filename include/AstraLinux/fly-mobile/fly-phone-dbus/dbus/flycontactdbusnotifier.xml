@@ -1,0 +1,29 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.fly.phone.launcher.FlyContactDbusNotifier">
+    <signal name="contactCreated">
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <signal name="contactDataUpdated">
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <signal name="contactPhotoUpdated">
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <signal name="contactRemoved">
+      <arg name="id" type="s" direction="out"/>
+    </signal>
+    <method name="emitContactCreated">
+      <arg name="id" type="s" direction="in"/>
+    </method>
+    <method name="emitContactDataUpdated">
+      <arg name="id" type="s" direction="in"/>
+    </method>
+    <method name="emitContactPhotoUpdated">
+      <arg name="id" type="s" direction="in"/>
+    </method>
+    <method name="emitContactRemoved">
+      <arg name="id" type="s" direction="in"/>
+    </method>
+  </interface>
+</node>
