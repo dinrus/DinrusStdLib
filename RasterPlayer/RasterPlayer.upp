@@ -1,0 +1,14 @@
+description "Контрол для показа анимированного GIF и многостраничных файлов TIFF\377";
+
+uses
+	drx/X/gif,
+	drx/X/tif;
+
+file
+	drx/RasterPlayer.cpp,
+	drx/RasterPlayer.h,
+	drx/RasterPlayer.iml,
+	drx/RasterPlayer.usc,
+	Credits.txt,
+	src.tpp;
+

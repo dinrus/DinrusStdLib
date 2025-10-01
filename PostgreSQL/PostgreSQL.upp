@@ -1,0 +1,22 @@
+description "Поддержка баз данных PostgreSQL SQl\377";
+
+noblitz;
+
+acceptflags
+	NOPOSTGRESQL;
+
+uses
+	drx/Sql;
+
+link
+	-lpq;
+
+pkg_config(LINUX | FREEBSD | OPENBSD) libpq;
+
+file
+	PostgreSQL.h,
+	PostgreSQLSchema.h,
+	PostgreSQL.cpp,
+	Info readonly separator,
+	Copying;
+
