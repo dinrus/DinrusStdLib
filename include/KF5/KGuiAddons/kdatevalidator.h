@@ -1,0 +1,37 @@
+/*  -*- C++ -*-
+    This file is part of the KDE libraries
+    SPDX-FileCopyrightText: 1997 Tim D. Gilman <tdgilman@best.org>
+    SPDX-FileCopyrightText: 1998-2001 Mirko Boehm <mirko@kde.org>
+    SPDX-FileCopyrightText: 2007 John Layt <john@layt.net>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
+
+#ifndef KDATEVALIDATOR_H
+#define KDATEVALIDATOR_H
+
+#include <kguiaddons_export.h>
+
+#include <QValidator>
+
+/**
+ * @class KDateValidator kdatevalidator.h KDateValidator
+ *
+ * Validates user-entered dates.
+ */
+class KGUIADDONS_EXPORT KDateValidator : public QValidator
+{
+    Q_OBJECT
+public:
+    explicit KDateValidator(QObject *parent = nullptr);
+    State validate(QString &text, int &e) const override;
+    void fixup(QString &input) const override;
+    State date(const QString &text, QDate &date) const;
+
+private:
+    // KF6 TODO: add explicit destructor, use std::unique_ptr
+    friend class KDateValidatorPrivate;
+    class KDateValidatorPrivate *const d;
+};
+
+#endif // KDATEVALIDATOR_H
